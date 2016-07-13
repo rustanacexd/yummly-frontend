@@ -11,6 +11,9 @@ const HomePage = () => {
         <li>Review the <Link to="fuel-savings">demo app</Link></li>
         <li>Remove the demo and start coding: npm run remove-demo</li>
       </ol>
+
+    <button type="button" className="btn btn-default">button</button>
+
     </div>
   );
 };

@@ -1,18 +1,20 @@
 import React, { PropTypes } from 'react';
 import { Link, IndexLink } from 'react-router';
+import Header from './Header';
+import Footer from './Footer';
 
 const App = (props) => {
-  return (
-    <div>
-      <IndexLink to="/">Home</IndexLink>
-      <br/>
-      {props.children}
-    </div>
-  );
+    return (
+        <div>
+            <Header />
+            {props.children}
+            <Footer />
+        </div>
+    );
 };
 
 App.propTypes = {
-  children: PropTypes.element
+    children: PropTypes.element
 };
 
 export default App;
