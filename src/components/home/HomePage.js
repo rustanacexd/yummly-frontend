@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import NavFilter from '../common/NavFilter';
 import RecipeCard from '../common/RecipeCard';
@@ -9,8 +10,8 @@ class HomePage extends Component {
       <div>
         <NavFilter />
         <div className="row">
-          {[...Array(10)].map((_, i) => {
-            return <RecipeCard key={i}/>
+          {this.props.recipes.map((recipe, i) => {
+            return <RecipeCard title={recipe.title} image={recipe.image} key={i}/>
           }) }
         </div>
       </div>
@@ -22,4 +23,8 @@ HomePage.propTypes = {
 
 };
 
-export default HomePage;
+function mapStateToProps({recipes}, ownProps) {
+  return { recipes }
+}
+
+export default connect(mapStateToProps)(HomePage);
