@@ -69,6 +69,25 @@ const RecipeContent = ({recipe}) => {
                     </div>
                 </div>
 
+                <div className="section">
+                    <table className="center highlight responsive">
+                        <thead>
+                            <tr>
+                                {Object.keys(recipe.taste).map((key, i) => {
+                                    return <th className="center-align" key={i} data-field="id">{key}</th>
+                                }) }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {Object.keys(recipe.taste).map((key, i) => {
+                                    return <td className="center-align" key={i}>{recipe.taste[key]}</td>
+                                }) }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <div className="section chips">
                     {recipe.tags.map((tag, i) => {
                         return (
@@ -77,6 +96,7 @@ const RecipeContent = ({recipe}) => {
                             </div>
                         );
                     }) }
+
                 </div>
 
                 <div className="section">

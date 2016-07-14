@@ -8,7 +8,7 @@ const RecipeRelatedList = ({recipes}) => {
                 {recipes.slice(0,3).map((recipe, i) => {
                     return (
                         <div className="col s12" key={i}>
-                           <RecipeCard recipe={recipe} size="small"/> 
+                           <RecipeCard recipe={recipe} size="medium"/> 
                         </div>
                     )
                 }) }
