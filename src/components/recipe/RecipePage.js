@@ -11,11 +11,17 @@ class RecipePage extends Component {
         this.props.loadRecipe(this.props.params.id);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.props.loadRecipe(this.props.params.id);
+    }
+
     render() {
         return (
             <div className="row">
                 <RecipeContent recipe={this.props.recipe}/>
-                <RecipeRelatedList recipes={this.props.recipes}/>
+                <RecipeRelatedList recipes={this.props.recipes.filter(recipe => {
+                    return recipe.id !== this.props.recipe.id;
+                }) }/>
             </div>
         );
     }

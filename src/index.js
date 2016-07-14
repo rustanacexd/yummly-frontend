@@ -1,13 +1,13 @@
 /* eslint-disable import/default */
-
 import React from 'react';
 import {render} from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
+import { Router, browserHistory, applyRouterMiddleware } from 'react-router';
 import routes from './routes';
 import configureStore from './store/configureStore';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { loadRecipes } from './actions/recipeActions';
+import useScroll from 'react-router-scroll';
 
 const store = configureStore();
 store.dispatch(loadRecipes());
@@ -17,6 +17,8 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 render(
   <Provider store={store}>
-    <Router history={history} routes={routes} />
+    <Router history={history}
+      routes={routes}
+      render={applyRouterMiddleware(useScroll()) }/>
   </Provider>, document.getElementById('app')
 );
