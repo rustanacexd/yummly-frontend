@@ -11,7 +11,17 @@ class HomePage extends Component {
         <NavFilter />
         <div className="row">
           {this.props.recipes.map((recipe, i) => {
-            return <RecipeCard title={recipe.title} image={recipe.image} key={i}/>
+            return (
+              <RecipeCard
+                title={recipe.title}
+                description={recipe.description}
+                rating={recipe.rating}
+                category={recipe.category}
+                calories={recipe.calories}
+                rating={recipe.rating}
+                image={recipe.image}
+                key={i}/>
+            )
           }) }
         </div>
       </div>
