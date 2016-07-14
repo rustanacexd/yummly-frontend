@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 
-const url = 'http://localhost:8080/recipes';
+const url = 'http://localhost:8080/recipes/';
 
 
 class RecipeApi {

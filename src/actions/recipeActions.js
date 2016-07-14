@@ -7,7 +7,7 @@ export function loadRecipesSuccess(recipes) {
 }
 
 export function loadRecipeSuccess(recipe) {
-    return { type: type.LOAD_RECIPE_SUCCESS, recipe };
+    return { type: types.LOAD_RECIPE_SUCCESS, recipe };
 }
 
 export function loadRecipes() {

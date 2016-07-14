@@ -1,26 +1,24 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-const RecipeCard = ({id, title, image, description, rating, calories}) => {
+const RecipeCard = ({recipe, size}) => {
     return (
-
-        <div className="col s12 m6 l3">
-            <div className="card large hoverable">
-                <div className="card-image">
-                    <img src={image} />
-                    <span className="card-title">{title}</span>
-                </div>
-                <div className="card-content">
-                    <p>{description}</p>
-                </div>
-                <div className="card-action">
-                    <Link to={`/recipe/${id}`}> See ingredients </Link>
-                    <span className="right" style={{marginRight: 5}}> Rating: {rating}</span>
-                    <span className="right" style={{marginRight: 5}}> Calories: {calories}</span>
-                </div>
-
+        <div className={`card ${size} hoverable`}>
+            <div className="card-image">
+                <img src={recipe.image} />
+                <span className="card-title">{recipe.title}</span>
             </div>
+            <div className="card-content">
+                <p>{recipe.description}</p>
+            </div>
+            <div className="card-action">
+                <Link to={`/recipe/${recipe.id}`}> See ingredients </Link>
+                <span className="right" style={{ marginRight: 5 }}> Rating: {recipe.rating}</span>
+                <span className="right" style={{ marginRight: 5 }}> Calories: {recipe.calories}</span>
+            </div>
+
         </div>
+
     );
 };
 

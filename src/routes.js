@@ -4,12 +4,12 @@ import { Route, IndexRoute } from 'react-router';
 import App from './components/App';
 import HomePage from './components/home/HomePage';
 import NotFoundPage from './components/NotFoundPage';
-import SingleRecipePage from './components/recipe/SingleRecipePage';
+import RecipePage from './components/recipe/RecipePage';
 
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage}/>
-    <Route path="recipe/:id" component={SingleRecipePage}/>
+    <Route path="recipe/:id" component={RecipePage}/>
     <Route path="*" component={NotFoundPage}/>
   </Route>
 );
