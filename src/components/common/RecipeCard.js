@@ -1,7 +1,9 @@
 import React from 'react';
+import {Link} from 'react-router';
 
-const RecipeCard = ({title, image, description, rating, calories}) => {
+const RecipeCard = ({id, title, image, description, rating, calories}) => {
     return (
+
         <div className="col s12 m6 l3">
             <div className="card large hoverable">
                 <div className="card-image">
@@ -12,7 +14,7 @@ const RecipeCard = ({title, image, description, rating, calories}) => {
                     <p>{description}</p>
                 </div>
                 <div className="card-action">
-                    <a href="#">See Ingredients</a>
+                    <Link to={`/recipe/${id}`}> See ingredients </Link>
                     <span className="right" style={{marginRight: 5}}> Rating: {rating}</span>
                     <span className="right" style={{marginRight: 5}}> Calories: {calories}</span>
                 </div>

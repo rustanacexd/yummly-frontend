@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
 import NavFilter from '../common/NavFilter';
 import RecipeCard from '../common/RecipeCard';
 
@@ -20,6 +19,7 @@ class HomePage extends Component {
                 calories={recipe.calories}
                 rating={recipe.rating}
                 image={recipe.image}
+                id={recipe.id}
                 key={i}/>
             )
           }) }

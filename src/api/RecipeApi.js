@@ -8,6 +8,11 @@ class RecipeApi {
         return fetch(url + `?_limit=${limit}`)
             .then(response => response.json());
     }
+
+    static getRecipe(id = 1) {
+        return fetch(url + id)
+            .then(response => response.json());
+    }
 }
 
 export default RecipeApi;
