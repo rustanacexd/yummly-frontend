@@ -1,6 +1,5 @@
 import React from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
@@ -15,8 +14,8 @@ const renderIngredients = (ingredients) => {
                 <Divider />
             </div>
         );
-    })
-}
+    });
+};
 
 const renderTags = (tags) => {
     return tags.map((tag, index) => {
@@ -24,18 +23,18 @@ const renderTags = (tags) => {
             <Chip className="tag" key={index}>
                 {tag}
             </Chip>
-        )
+        );
     });
-}
+};
 
-const RecipeContent = ({recipe}) => {
+const RecipeContent = ({recipe, user}) => {
     return (
         <div className="col-sm-7 col-md-9">
             <Card>
                 <CardHeader
-                    title="URL Avatar"
-                    subtitle="Subtitle"
-                    avatar="http://lorempixel.com/100/100/nature/"
+                    title={user.username}
+                    subtitle={user.website}
+                    avatar={user.avatar}
                     />
                 <CardMedia
                     style={{ display: 'flex', justifyContent: 'center' }}
@@ -56,7 +55,7 @@ const RecipeContent = ({recipe}) => {
                     </div>
 
                     <div className="info-label">Rating:
-                        <span> {recipe.rating}</span>
+                        <span> {recipe.rating} / 5 ({recipe.numberOfReviews})</span>
                     </div>
 
                     <div className="info-label">Calories:
