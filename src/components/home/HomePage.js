@@ -4,22 +4,21 @@ import NavFilter from '../common/NavFilter';
 import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import {loadRecipes} from '../../actions/recipeActions.js';
-
+import Loading from '../common/Loading';
 
 class HomePage extends Component {
   render() {
 
     if (this.props.loading && !this.props.isLoadMore) {
-      return <CircularProgress size={2} style={{ position: 'fixed', top: '45%', left: '45%', zIndex: '999' }}/>
+      return <Loading loading={true}/>
     }
 
     return (
       <div>
-        {this.props.isLoadMore && this.props.loading && <CircularProgress size={2}
-          style={{ position: 'fixed', top: '45%', left: '45%', zIndex: '999' }}/>}
+        <Loading loading={this.props.isLoadMore && this.props.loading} />
 
         <NavFilter recipes={this.props.recipes} />
-        <RaisedButton label="LoadMore" onTouchTap={() => {
+        <RaisedButton label="Load More" onTouchTap={() => {
           this.props.loadRecipes(this.props.recipes.length + 5, true);
         } }/>
       </div>

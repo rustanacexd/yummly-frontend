@@ -4,7 +4,7 @@ import {loadRecipe} from '../../actions/recipeActions';
 import {loadUser} from '../../actions/userActions';
 import RecipeContent from './RecipeContent';
 import RecipeRelatedList from './RecipeRelatedList';
-import CircularProgress from 'material-ui/CircularProgress';
+import Loading from '../common/Loading';
 
 class RecipePage extends Component {
 
@@ -28,7 +28,7 @@ class RecipePage extends Component {
 
     render() {
         if (this.props.loading) {
-            return <CircularProgress size={2} style={{ position: 'absolute', top: '45%', left: '45%', zIndex: '999' }}/>
+            return <Loading />
         }
 
         return (
