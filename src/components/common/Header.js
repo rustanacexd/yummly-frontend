@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import {IndexLink} from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import Drawer from 'material-ui/Drawer';
+import {browserHistory} from 'react-router';
 
 class Header extends Component {
 
@@ -30,8 +28,10 @@ class Header extends Component {
     render() {
         return (
             <AppBar
+                style={{ cursor: "pointer" }}
                 title="Yummly"
                 onLeftIconButtonTouchTap={this.handleToggle}
+                onTitleTouchTap={() => browserHistory.push('/') }
                 iconElementRight={
                     <IconMenu
                         iconButtonElement={

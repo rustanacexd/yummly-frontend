@@ -6,11 +6,10 @@ const RecipeList = ({recipes}) => {
         <div className="row">
             {recipes.map((recipe, i) => {
                 return (
-                    <div className="col-sm-4" style={{
+                    <div key={i} className="col-sm-6 col-md-3" style={{
                         paddingBottom: 20
                     }}>
                         <RecipeCard
-                            key={i}
                             recipe={recipe}
                             />
                     </div>

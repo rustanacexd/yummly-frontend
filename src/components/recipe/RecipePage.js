@@ -10,8 +10,12 @@ class RecipePage extends Component {
         this.props.loadRecipe(this.props.params.id);
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.props.loadRecipe(this.props.params.id);
+    componentDidUpdate(prevProps) {
+        let oldId = prevProps.params.id
+        let newId = this.props.params.id
+        if (newId !== oldId) {
+            this.props.loadRecipe(this.props.params.id);
+        }
     }
 
     render() {
