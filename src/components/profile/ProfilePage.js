@@ -14,7 +14,7 @@ class ProfilePage extends Component {
             <div className="container">
                 <h4 className="center">Profile</h4>
                 <div className="center section">
-                    <img style={{width: 200}}src={this.props.user.avatar} alt className="responsive-img circle" />
+                    <img style={{ width: 200 }}src={this.props.user.avatar} alt className="responsive-img circle" />
                 </div>
                 <ProfileForm user={this.props.user} />
             </div>
