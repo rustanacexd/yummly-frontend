@@ -20,4 +20,3 @@ export function recipeReducer(state = recipe, action) {
       return state;
   }
 }
-

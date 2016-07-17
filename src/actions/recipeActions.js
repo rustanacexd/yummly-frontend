@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
+import {beginAjaxCall, ajaxCallError, isLoadMore} from './ajaxStatusActions';
 import RecipeApi from '../api/RecipeApi';
 
 export function loadRecipesSuccess(recipes) {
@@ -10,10 +10,11 @@ export function loadRecipeSuccess(recipe) {
     return { type: types.LOAD_RECIPE_SUCCESS, recipe };
 }
 
-export function loadRecipes() {
+export function loadRecipes(limit = 20, isLoad = false) {
     return dispatch => {
         dispatch(beginAjaxCall());
-        return RecipeApi.getAllRecipes()
+        if(isLoadMore) dispatch(isLoadMore(isLoad));
+        return RecipeApi.getAllRecipes(limit)
             .then(recipes => dispatch(loadRecipesSuccess(recipes)))
             .catch(error => {
                 dispatch(ajaxCallError(error));
@@ -35,3 +36,4 @@ export function loadRecipe(id) {
             })
     };
 }
+

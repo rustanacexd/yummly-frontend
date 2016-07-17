@@ -5,7 +5,7 @@ const url = 'http://localhost:8080/recipes/';
 
 
 class RecipeApi {
-    static getAllRecipes(limit = 20) {
+    static getAllRecipes(limit) {
         return fetch(url + `?_limit=${limit}`)
             .then(delayPromise(3000))
             .then(response => response.json());
