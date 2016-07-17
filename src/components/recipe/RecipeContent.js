@@ -1,16 +1,36 @@
 import React from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import Subheader from 'material-ui/Subheader';
+import Chip from 'material-ui/Chip';
+import '../../styles/recipe.scss';
 
-const recipeDetailStyles = {
-    display: 'flex',
-    justifyContent: 'space-around',
-    textAlign: 'center'
-};
+const renderIngredients = (ingredients) => {
+    return ingredients.map((ingredient, index) => {
+        return (
+            <div key={index}>
+                <ListItem primaryText={ingredient} disabled={true} />
+                <Divider />
+            </div>
+        );
+    })
+}
+
+const renderTags = (tags) => {
+    return tags.map((tag, index) => {
+        return (
+            <Chip className="tag" key={index}>
+                {tag}
+            </Chip>
+        )
+    });
+}
 
 const RecipeContent = ({recipe}) => {
     return (
-        <div className="col-sm-9">
+        <div className="col-sm-7 col-md-9">
             <Card>
                 <CardHeader
                     title="URL Avatar"
@@ -18,20 +38,42 @@ const RecipeContent = ({recipe}) => {
                     avatar="http://lorempixel.com/100/100/nature/"
                     />
                 <CardMedia
-                    overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
+                    style={{ display: 'flex', justifyContent: 'center' }}
+                    overlay={<CardTitle title={recipe.title} subtitle={recipe.description}/>}
                     >
-                    <img src="http://lorempixel.com/600/337/nature/" />
+                    <img src="http://placehold.it/500x500/" style={{ maxWidth: 500 }}/>
                 </CardMedia>
-                <CardTitle title="Card title" subtitle="Card subtitle" />
                 <CardText>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Donec mattis pretium massa.Aliquam erat volutpat.Nulla facilisi.
-                    Donec vulputate interdum sollicitudin.Nunc lacinia auctor quam sed pellentesque.
-                    Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                    <List>
+                        <Subheader>Ingredients</Subheader>
+                        {renderIngredients(recipe.ingredients) }
+
+                    </List>
                 </CardText>
-                <CardActions>
-                    <FlatButton label="Action1" />
-                    <FlatButton label="Action2" />
+                <CardActions className="info-wrapper">
+                  <div className="info-label">Category:
+                        <span> {recipe.category}</span>
+                    </div>
+
+                    <div className="info-label">Rating:
+                        <span> {recipe.rating}</span>
+                    </div>
+
+                    <div className="info-label">Calories:
+                        <span> {recipe.calories}</span>
+                    </div>
+                    <div className="info-label">Total Time:
+                        <span> {recipe.totalTime} minutes </span>
+                    </div>
+
+                    <div className="info-label">Servings:
+                        <span> {recipe.servings}</span>
+                    </div>
+                </CardActions>
+
+                <CardActions className="tags-wrapper">
+                    <div className="info-label">Tags: </div>
+                    {renderTags(recipe.tags) }
                 </CardActions>
             </Card>
         </div>
