@@ -6,9 +6,11 @@ const RecipeList = ({recipes}) => {
         <div className="row">
             {recipes.map((recipe, i) => {
                 return (
-                    <div className="col s12 m6 l3"  key={recipe.id}>
+                    <div className="col-sm-4" style={{
+                        paddingBottom: 20
+                    }}>
                         <RecipeCard
-                            size="large"
+                            key={i}
                             recipe={recipe}
                             />
                     </div>

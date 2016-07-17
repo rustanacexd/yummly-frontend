@@ -8,17 +8,27 @@ import configureStore from './store/configureStore';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { loadRecipes } from './actions/recipeActions';
 import useScroll from 'react-router-scroll';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import './styles/styles.scss';
+import '../node_modules/flexboxgrid/dist/flexboxgrid.min.css';
+
+injectTapEventPlugin();
+
 
 const store = configureStore();
+
 store.dispatch(loadRecipes());
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
 
 render(
-  <Provider store={store}>
-    <Router history={history}
-      routes={routes}
-      render={applyRouterMiddleware(useScroll()) }/>
-  </Provider>, document.getElementById('app')
+  <MuiThemeProvider>
+    <Provider store={store}>
+      <Router history={history}
+        routes={routes}
+        render={applyRouterMiddleware(useScroll()) }/>
+    </Provider>
+  </MuiThemeProvider>, document.getElementById('app')
 );
