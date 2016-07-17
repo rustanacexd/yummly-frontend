@@ -11,7 +11,7 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage}/>
     <Route path="recipe/:id" component={RecipePage}/>
-    <Route path="profile/:id" component={ProfilePage} />
+    <Route path="profile/(:id)" component={ProfilePage} />
     <Route path="*" component={NotFoundPage}/>
   </Route>
 );

@@ -14,9 +14,8 @@ export function loadRecipes() {
     return dispatch => {
         dispatch(beginAjaxCall());
         return RecipeApi.getAllRecipes()
-            .then(recipes => {
-                dispatch(loadRecipesSuccess(recipes));
-            }).catch(error => {
+            .then(recipes => dispatch(loadRecipesSuccess(recipes)))
+            .catch(error => {
                 dispatch(ajaxCallError(error));
                 throw (error);
             });

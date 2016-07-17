@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {loadRecipe} from '../../actions/recipeActions';
 import RecipeContent from './RecipeContent';
 import RecipeRelatedList from './RecipeRelatedList';
