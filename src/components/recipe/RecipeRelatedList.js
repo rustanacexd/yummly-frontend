@@ -3,18 +3,10 @@ import RecipeCard from '../common/RecipeCard';
 
 const RecipeRelatedList = ({recipes}) => {
     return (
-        <div className="col s12 m4 l3">
-            <div className="row">
-                {recipes.slice(0,3).map((recipe, i) => {
-                    return (
-                        <div className="col s12" key={i}>
-                           <RecipeCard recipe={recipe} size="medium"/> 
-                        </div>
-                    )
-                }) }
-
-
-            </div>
+        <div className="col-sm-5 col-md-3">
+            {recipes.slice(0, 3).map((recipe, i) => {
+                return <RecipeCard key={i} recipe={recipe} size="medium"/>
+            }) }
         </div>
     );
 };

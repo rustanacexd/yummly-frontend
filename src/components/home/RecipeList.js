@@ -6,9 +6,8 @@ const RecipeList = ({recipes}) => {
         <div className="row">
             {recipes.map((recipe, i) => {
                 return (
-                    <div className="col s12 m6 l3"  key={recipe.id}>
+                    <div key={i} className="col-sm-6 col-md-3">
                         <RecipeCard
-                            size="large"
                             recipe={recipe}
                             />
                     </div>

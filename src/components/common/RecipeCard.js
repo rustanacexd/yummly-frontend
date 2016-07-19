@@ -1,22 +1,34 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
-const RecipeCard = ({recipe, size}) => {
+
+const RecipeCard = ({recipe}) => {
     return (
-        <div className={`card ${size} hoverable`}>
-            <div className="card-image">
-                <img src={recipe.image} />
-                <span className="card-title">{recipe.title}</span>
-            </div>
-            <div className="card-content">
-                <p>{recipe.description}</p>
-            </div>
-            <div className="card-action">
-                <Link to={`/recipe/${recipe.id}`}> See ingredients </Link>
-                <span className="right" style={{ marginRight: 5 }}> Rating: {recipe.rating}</span>
-                <span className="right" style={{ marginRight: 5 }}> Calories: {recipe.calories}</span>
-            </div>
+        <div style={{
+            paddingBottom: 20
+        }}>
+            <Card >
+                <CardMedia 
+                overlay={
+                    <CardTitle 
+                    title={recipe.title} />
+                }>
+                    <img src="http://placehold.it/300x300/" />
+                </CardMedia>
 
+                <CardText>
+                    {recipe.description}
+                </CardText>
+                <CardActions>
+                    <FlatButton label="See More" onTouchTap={() => {
+                        browserHistory.push(`/recipe/${recipe.id}`);
+                    } }/>
+                    <FlatButton label={`Rating: ${recipe.rating} / 5`} style={{ float: "right" }}/>
+                </CardActions>
+
+            </Card>
         </div>
 
     );

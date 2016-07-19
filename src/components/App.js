@@ -3,15 +3,15 @@ import { Link, IndexLink } from 'react-router';
 import Header from './common/Header';
 import Footer from './common/Footer';
 
+
 class App extends Component {
     render() {
-        return (
-            <div>
-                <Header />
-                {this.props.children}
-                <Footer />
-            </div>
-        );
+            return (
+                <div>
+                    <Header />
+                    {this.props.children}
+                </div>
+            );
     }
 }
 
@@ -19,5 +19,6 @@ class App extends Component {
 App.propTypes = {
     children: PropTypes.object.isRequired
 };
+
 
 export default App;

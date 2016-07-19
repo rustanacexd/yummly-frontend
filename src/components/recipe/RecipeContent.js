@@ -1,123 +1,80 @@
 import React from 'react';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import Subheader from 'material-ui/Subheader';
+import Chip from 'material-ui/Chip';
+import '../../styles/recipe.scss';
 
-
-const recipeDetailStyles = {
-    display: 'flex',
-    justifyContent: 'space-around',
-    textAlign: 'center'
+const renderIngredients = (ingredients) => {
+    return ingredients.map((ingredient, index) => {
+        return (
+            <div key={index}>
+                <ListItem primaryText={ingredient} disabled={true} />
+                <Divider />
+            </div>
+        );
+    });
 };
 
-const RecipeContent = ({recipe}) => {
+const renderTags = (tags) => {
+    return tags.map((tag, index) => {
+        return (
+            <Chip className="tag" key={index}>
+                {tag}
+            </Chip>
+        );
+    });
+};
+
+const RecipeContent = ({recipe, user}) => {
     return (
-        <div className="col s12 m8 l9">
-            <div className="container">
-                <div className="section">
-                    <div className="card medium">
-                        <div className="card-image">
-                            <img src={recipe.image} />
-                            <span className="card-title">{recipe.title}</span>
-                        </div>
-                        <div className="card-content">
-                            <p>{recipe.description}</p>
-                        </div>
+        <div className="col-sm-7 col-md-9">
+            <Card>
+                <CardHeader
+                    title={user.username}
+                    subtitle={user.website}
+                    avatar={user.avatar}
+                    />
+                <CardMedia
+                    style={{ display: 'flex', justifyContent: 'center' }}
+                    overlay={<CardTitle title={recipe.title} subtitle={recipe.description}/>}
+                    >
+                    <img src="http://placehold.it/500x500/" style={{ maxWidth: 500 }}/>
+                </CardMedia>
+                <CardText>
+                    <List>
+                        <Subheader>Ingredients</Subheader>
+                        {renderIngredients(recipe.ingredients) }
 
-                    </div>
-                </div>
-                <div style={recipeDetailStyles}>
-                    <div className="item">
-                        <div>Ingredients</div>
-                        <div>
-                            {recipe.ingredientsCount}
-                        </div>
-                        <div>
-                            Count
-                        </div>
-                    </div>
-                    <div className="item">
-                        <div>
-                            Nutrition
-                        </div>
-                        <div>
-                            {recipe.calories}
-                        </div>
-                        <div>
-                            Calories
-                        </div>
+                    </List>
+                </CardText>
+                <CardActions className="info-wrapper">
+                  <div className="info-label">Category:
+                        <span> {recipe.category}</span>
                     </div>
 
-                    <div className="item">
-                        <div>
-                            Total Time
-                        </div>
-                        <div>
-                            {recipe.totalTime}
-                        </div>
-                        <div>
-                            Minutes
-                        </div>
+                    <div className="info-label">Rating:
+                        <span> {recipe.rating} / 5 ({recipe.numberOfReviews})</span>
                     </div>
-                    <div className="item">
-                        <div>
-                            Rating
-                        </div>
-                        <div>
-                            {recipe.averageRating}
-                        </div>
-                        <div>
-                            {recipe.numberOfReviews} Review(s)
-                        </div>
+
+                    <div className="info-label">Calories:
+                        <span> {recipe.calories}</span>
                     </div>
-                </div>
+                    <div className="info-label">Total Time:
+                        <span> {recipe.totalTime} minutes </span>
+                    </div>
 
-                <div className="section">
-                    <table className="center highlight responsive">
-                        <thead>
-                            <tr>
-                                {Object.keys(recipe.taste).map((key, i) => {
-                                    return <th className="center-align" key={i} data-field="id">{key}</th>
-                                }) }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                {Object.keys(recipe.taste).map((key, i) => {
-                                    return <td className="center-align" key={i}>{recipe.taste[key]}</td>
-                                }) }
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <div className="info-label">Servings:
+                        <span> {recipe.servings}</span>
+                    </div>
+                </CardActions>
 
-                <div className="section chips">
-                    {recipe.tags.map((tag, i) => {
-                        return (
-                            <div className="chip" key={i}>
-                                {tag}
-                            </div>
-                        );
-                    }) }
-
-                </div>
-
-                <div className="section">
-                    <table className="striped center highlight responsive">
-                        <thead>
-                            <tr>
-                                <th data-field="id">Ingredients</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {recipe.ingredients.map((ingredient, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>{ingredient}</td>
-                                    </tr>
-                                )
-                            }) }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                <CardActions className="tags-wrapper">
+                    <div className="info-label">Tags: </div>
+                    {renderTags(recipe.tags) }
+                </CardActions>
+            </Card>
         </div>
     );
 };
