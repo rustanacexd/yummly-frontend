@@ -22,6 +22,7 @@ class RecipePage extends Component {
 
     fetchData() {
         this.props.loadRecipe(this.props.params.id).then(recipe => {
+            //TODO: CHECK IF DIFFERENT USER BEFORE FETCHING
             this.props.loadUser(this.props.recipe.userId);
         });
     }

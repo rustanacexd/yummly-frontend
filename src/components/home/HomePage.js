@@ -8,14 +8,13 @@ import Loading from '../common/Loading';
 
 class HomePage extends Component {
   render() {
-
-    if (this.props.loading && !this.props.isLoadMore) {
-      return <Loading loading={true}/>
+    if (this.props.recipes.length == 0) {
+      return <Loading />
     }
 
     return (
       <div>
-        <Loading loading={this.props.isLoadMore && this.props.loading} />
+        <Loading loading={this.props.isLoadMore && this.props.loading } />
 
         <NavFilter recipes={this.props.recipes} />
         <RaisedButton label="Load More" onTouchTap={() => {

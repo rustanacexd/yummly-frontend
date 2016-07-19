@@ -16,14 +16,14 @@ function handleActive(tab) {
     alert(`A tab with this route property ${tab.props['data-route']} was activated.`);
 }
 
-
 const NavFilter = ({recipes}) => {
     return (
         <Tabs>
             <Tab label="Item One" >
                 <RecipeList recipes={recipes}/>
             </Tab>
-            <Tab label="Item Two" >
+            <Tab label="Item Two"
+                >
                 <div>
                     <h2 style={styles.headline}>Tab Two</h2>
                     <p>
@@ -34,7 +34,6 @@ const NavFilter = ({recipes}) => {
             <Tab
                 label="onActive"
                 data-route="/home"
-                onActive={handleActive}
                 >
                 <div>
                     <h2 style={styles.headline}>Tab Three</h2>
