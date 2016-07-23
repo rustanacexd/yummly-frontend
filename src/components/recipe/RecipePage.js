@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {loadRecipe} from '../../actions/recipeActions';
+import {getRecipe, getRelatedRecipes} from '../../actions/recipeActions';
 import {loadUser} from '../../actions/userActions';
 import RecipeContent from './RecipeContent';
 import RecipeRelatedList from './RecipeRelatedList';
@@ -13,19 +13,19 @@ class RecipePage extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        let oldId = prevProps.params.id
-        let newId = this.props.params.id
+        let oldId = prevProps.params.id;
+        let newId = this.props.params.id;
         if (newId !== oldId) {
             this.fetchData();
         }
     }
 
     fetchData() {
-        this.props.loadRecipe(this.props.params.id).then(recipe => {
-            //TODO: CHECK IF DIFFERENT USER BEFORE FETCHING
-            this.props.loadUser(this.props.recipe.userId);
+        this.props.getRecipe(this.props.params.id).then(recipe => {
+            this.props.loadUser(recipe.userId);
+            this.props.getRelatedRecipes(recipe.category);
         });
-    }
+
 
     render() {
         if (this.props.loading) {
@@ -35,20 +35,18 @@ class RecipePage extends Component {
         return (
             <div className="row">
                 <RecipeContent recipe={this.props.recipe} user={this.props.user}/>
-                <RecipeRelatedList recipes={this.props.recipes.filter(recipe => {
+                <RecipeRelatedList recipes={this.props.relatedRecipes.filter(recipe => {
                     return recipe.id !== this.props.recipe.id;
-                }) }/>
+                })}/>
             </div>
         );
     }
 }
 
-RecipePage.PropTypes = {
+RecipePage.PropTypes = {};
 
-};
-
-function mapStateToProps({recipe, recipes, user, ajaxCallsInProgress}) {
-    return { recipe, recipes, user, loading: ajaxCallsInProgress > 0 };
+function mapStateToProps({recipe, relatedRecipes, user, ajaxCallsInProgress}) {
+    return {recipe, relatedRecipes, user, loading: ajaxCallsInProgress > 0};
 }
 
-export default connect(mapStateToProps, { loadRecipe, loadUser })(RecipePage);
+export default connect(mapStateToProps, {getRecipe, loadUser, getRelatedRecipes})(RecipePage);

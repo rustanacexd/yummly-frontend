@@ -7,12 +7,10 @@ const RecipeList = ({recipes}) => {
             {recipes.map((recipe, i) => {
                 return (
                     <div key={i} className="col-sm-6 col-md-3">
-                        <RecipeCard
-                            recipe={recipe}
-                            />
+                        <RecipeCard recipe={recipe}/>
                     </div>
                 )
-            }) }
+            })}
         </div>
     );
 };

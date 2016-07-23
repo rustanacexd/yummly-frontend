@@ -58,6 +58,7 @@ export const user = {
 
 export const users = [];
 export const recipes = [];
+export const relatedRecipes = [];
 export const ajaxCallsInProgress = 0;
 export const isLoadMore = false;
 

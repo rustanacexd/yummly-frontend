@@ -1,6 +1,5 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import Slider from 'material-ui/Slider'
 import RecipeList from '../home/RecipeList';
 
 const styles = {
@@ -8,8 +7,8 @@ const styles = {
         fontSize: 24,
         paddingTop: 16,
         marginBottom: 12,
-        fontWeight: 400,
-    },
+        fontWeight: 400
+    }
 };
 
 function handleActive(tab) {
@@ -19,11 +18,10 @@ function handleActive(tab) {
 const NavFilter = ({recipes}) => {
     return (
         <Tabs>
-            <Tab label="Item One" >
+            <Tab label="Item One">
                 <RecipeList recipes={recipes}/>
             </Tab>
-            <Tab label="Item Two"
-                >
+            <Tab label="Item Two">
                 <div>
                     <h2 style={styles.headline}>Tab Two</h2>
                     <p>
@@ -33,8 +31,7 @@ const NavFilter = ({recipes}) => {
             </Tab>
             <Tab
                 label="onActive"
-                data-route="/home"
-                >
+                data-route="/home">
                 <div>
                     <h2 style={styles.headline}>Tab Three</h2>
                     <p>
