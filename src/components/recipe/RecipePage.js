@@ -7,7 +7,6 @@ import RecipeRelatedList from './RecipeRelatedList';
 import Loading from '../common/Loading';
 
 class RecipePage extends Component {
-
     componentWillMount() {
         this.fetchData();
     }
@@ -21,15 +20,15 @@ class RecipePage extends Component {
     }
 
     fetchData() {
-        this.props.getRecipe(this.props.params.id).then(recipe => {
-            this.props.loadUser(recipe.userId);
-            this.props.getRelatedRecipes(recipe.category);
+        this.props.getRecipe(this.props.params.id).then(() => {
+            this.props.loadUser(this.props.recipe.userId);
+            this.props.getRelatedRecipes(this.props.recipe.category);
         });
-
+    }
 
     render() {
         if (this.props.loading) {
-            return <Loading />
+            return <Loading />;
         }
 
         return (

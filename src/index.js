@@ -13,7 +13,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import './styles/styles.scss';
 import '../node_modules/flexboxgrid/dist/flexboxgrid.min.css';
 
-injectTapEventPlugin();
 
 const store = configureStore();
 
@@ -23,6 +22,8 @@ store.dispatch(loadRecipes());
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
+
+injectTapEventPlugin();
 
 render(
   <MuiThemeProvider>

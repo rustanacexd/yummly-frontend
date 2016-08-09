@@ -3,6 +3,8 @@ import {routerReducer} from 'react-router-redux';
 import {recipesReducer, recipeReducer, relatedRecipesReducer} from './recipeReducer';
 import {userReducer} from './userReducer';
 import {ajaxStatusReducer, loadMoreReducer } from './ajaxStatusReducer';
+import { reducer as formReducer } from 'redux-form'
+
 
 const rootReducer = combineReducers({
     routing: routerReducer,
@@ -11,7 +13,8 @@ const rootReducer = combineReducers({
     relatedRecipes: relatedRecipesReducer,
     user: userReducer,
     ajaxCallsInProgress: ajaxStatusReducer,
-    isLoadMore: loadMoreReducer
+    isLoadMore: loadMoreReducer,
+    form: formReducer
 });
 
 export default rootReducer;
