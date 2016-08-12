@@ -3,6 +3,9 @@ import TextField from 'material-ui/TextField';
 import {Field, reduxForm, FieldArray} from 'redux-form';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import {getTags} from '../../actions/tagActions';
+import Chip from 'material-ui/Chip';
+import AutoComplete from 'material-ui/AutoComplete';
 
 
 const tastes = ['salty', 'savory', 'sour', 'bitter', 'spicy', 'sweet'];
@@ -13,17 +16,75 @@ const form = reduxForm({
     form: 'RecipeAddForm',
 });
 
+const styles = {
+    chip: {
+        margin: 4,
+    },
+    wrapper: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+};
+
 class RecipeAddPage extends Component {
+
+    componentWillMount() {
+        this.props.getTags();
+
+    }
 
     constructor(props) {
         super(props);
         this.renderIngredients = this.renderIngredients.bind(this);
+        this.renderTags = this.renderTags.bind(this);
+
+        this.state = {
+            currentTag: ''
+        };
     }
 
 
     renderTextField(field) {
         return (
-                <TextField fullWidth={true} {...field.input} type="number"/>
+            <TextField fullWidth={true} {...field.input} />
+        );
+    }
+
+    renderChip(field) {
+        return (
+            <Chip {...field.input} style={styles.chip}>
+                {field.input.value}
+            </Chip>
+        )
+    }
+
+
+    renderTags({fields}) {
+        return (
+            <div>
+                <div style={styles.wrapper}>
+                    {fields.map((member, index) =>
+                        <Field component={this.renderChip} name={`${member}.label`} key={index}
+                               onRequestDelete={() => fields.remove(index)}/>
+                    )}
+                </div>
+
+                <AutoComplete
+                    name="currentTag"
+                    filter={AutoComplete.fuzzyFilter}
+                    dataSource={this.props.tags}
+                    maxSearchResults={5}
+                    onUpdateInput={(searchText) => {
+                        this.setState({currentTag: searchText});
+                    }}
+                    onNewRequest={chosenRequest => {
+                        this.setState({currentTag: chosenRequest});
+                    }}
+                />
+
+                <RaisedButton label="Add Tag" primary={true}
+                              onTouchTap={() => fields.push({label: this.state.currentTag})}/>
+            </div>
         );
     }
 
@@ -51,7 +112,6 @@ class RecipeAddPage extends Component {
                     </div>
                 )}
                 <RaisedButton label="Add Ingredients" primary={true} onTouchTap={() => fields.push({})}/>
-
             </div>
         );
     }
@@ -72,7 +132,7 @@ class RecipeAddPage extends Component {
     }
 
     handleFormSubmit(formProps) {
-        console.log(formProps);
+        console.log(formProps.tags);
     }
 
     render() {
@@ -93,24 +153,27 @@ class RecipeAddPage extends Component {
                             <div className="row between-xs">
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="calories" floatingLabelText="Title"
-                                           component={this.renderTextField}/>
+                                           component={this.renderTextField} type="number"/>
                                 </div>
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="totalTime" floatingLabelText="Total Time"
-                                           component={this.renderTextField}/>
+                                           component={this.renderTextField} type="number"/>
                                 </div>
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="rating" floatingLabelText="Rating"
-                                           component={this.renderTextField}/>
+                                           component={this.renderTextField} type="number"/>
                                 </div>
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="servings" floatingLabelText="Servings"
-                                           component={this.renderTextField}/>
+                                           component={this.renderTextField} type="number"/>
                                 </div>
                             </div>
 
                             <h2>Ingredients</h2>
                             <FieldArray name="ingredients" component={this.renderIngredients}/>
+
+                            <h2>Tags</h2>
+                            <FieldArray name="tags" component={this.renderTags}/>
 
                             <h2>Tastes</h2>
                             <div className="row between-xs">
@@ -136,5 +199,9 @@ class RecipeAddPage extends Component {
     }
 }
 
-export default connect()(form(RecipeAddPage));
+function mapStateToProps({tags}) {
+    return {tags};
+}
+
+export default connect(mapStateToProps, {getTags})(form(RecipeAddPage));
 
