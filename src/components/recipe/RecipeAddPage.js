@@ -77,13 +77,14 @@ class RecipeAddPage extends Component {
                     onUpdateInput={(searchText) => {
                         this.setState({currentTag: searchText});
                     }}
+                    searchText={this.state.currentTag}
                     onNewRequest={chosenRequest => {
                         this.setState({currentTag: chosenRequest});
+                        fields.push({label: chosenRequest});
+                        this.setState({currentTag: ''});
                     }}
                 />
 
-                <RaisedButton label="Add Tag" primary={true}
-                              onTouchTap={() => fields.push({label: this.state.currentTag})}/>
             </div>
         );
     }
@@ -132,7 +133,7 @@ class RecipeAddPage extends Component {
     }
 
     handleFormSubmit(formProps) {
-        console.log(formProps.tags);
+        console.log(formProps);
     }
 
     render() {
