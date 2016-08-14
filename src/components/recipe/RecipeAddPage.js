@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {Field, reduxForm, FieldArray} from 'redux-form';
 import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -9,6 +10,8 @@ import Chip from 'material-ui/Chip';
 
 import {getTags} from '../../actions/tagActions';
 import {postRecipe} from '../../actions/recipeActions';
+import Loading from '../common/Loading';
+
 
 const tastes = ['salty', 'savory', 'sour', 'bitter', 'spicy', 'sweet'];
 
@@ -63,13 +66,13 @@ class RecipeAddPage extends Component {
         };
     }
 
-    renderTextField(field) {
+    static renderTextField(field) {
         return (
             <TextField fullWidth={true} {...field.input} errorText={field.touched && field.error && field.error}/>
         );
     }
 
-    renderChip(field) {
+    static renderChip(field) {
         return (
             <Chip {...field.input} style={styles.chip}>
                 {field.input.value}
@@ -82,7 +85,7 @@ class RecipeAddPage extends Component {
             <div>
                 <div style={styles.wrapper}>
                     {fields.map((member, index) =>
-                        <Field component={this.renderChip} name={`${member}.label`} key={index}
+                        <Field component={RecipeAddPage.renderChip} name={`${member}.label`} key={index}
                                onRequestDelete={() => fields.remove(index)}/>
                     )}
                 </div>
@@ -99,7 +102,6 @@ class RecipeAddPage extends Component {
                     onNewRequest={chosenRequest => {
                         this.setState({currentTag: chosenRequest});
                         fields.push({label: chosenRequest});
-                        this.setState({currentTag: ''});
                     }}
                 />
 
@@ -110,6 +112,7 @@ class RecipeAddPage extends Component {
     }
 
     renderIngredients({fields}) {
+
         return (
             <div>
                 {fields.map((member, index) =>
@@ -118,7 +121,7 @@ class RecipeAddPage extends Component {
                             <Field
                                 name={`${member}.ingredient`}
                                 type="text"
-                                component={this.renderTextField}
+                                component={RecipeAddPage.renderTextField}
                                 placeholder={`Ingredient ${index + 1}`} multiLine={true}/>
                         </div>
 
@@ -149,17 +152,13 @@ class RecipeAddPage extends Component {
     }
 
     handleFormSubmit(formProps) {
-
         this.props.postRecipe(Object.assign({}, formProps,
             {
-                ingredients: formProps.ingredients.filter(ingredient => ingredient.ingredient).map(
-                    ingredient => ingredient.ingredient
-                )
+                ingredients: [...new Set(formProps.ingredients.filter(ingredient => ingredient.ingredient).map(
+                    ingredient => ingredient.ingredient))]
             },
-            {tags: formProps.tags.map(tag => tag.label)},
+            {tags: [...new Set(formProps.tags.map(tag => tag.label))]},
             {ingredientCount: formProps.ingredients.length}));
-
-        console.log(formProps);
     }
 
     render() {
@@ -168,31 +167,33 @@ class RecipeAddPage extends Component {
 
         return (
             <div className="container">
+                <Loading loading={this.props.loading}/>
+
                 <div className="col-sm-6 col-sm-offset-3">
                     <div>
                         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
-                            <Field name="title" floatingLabelText="Title" type="text" component={this.renderTextField}/>
+                            <Field name="title" floatingLabelText="Title" type="text" component={RecipeAddPage.renderTextField}/>
 
                             <Field name="description" floatingLabelText="Description"
-                                   component={this.renderTextField} multiLine={true} rows={5}/>
+                                   component={RecipeAddPage.renderTextField} multiLine={true} rows={5}/>
 
                             <div className="row between-xs">
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="calories" floatingLabelText="Title"
-                                           component={this.renderTextField} type="number"/>
+                                           component={RecipeAddPage.renderTextField} type="number"/>
                                 </div>
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="totalTime" floatingLabelText="Total Time"
-                                           component={this.renderTextField} type="number"/>
+                                           component={RecipeAddPage.renderTextField} type="number"/>
                                 </div>
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="rating" floatingLabelText="Rating"
-                                           component={this.renderTextField} type="number"/>
+                                           component={RecipeAddPage.renderTextField} type="number"/>
                                 </div>
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="servings" floatingLabelText="Servings"
-                                           component={this.renderTextField} type="number"/>
+                                           component={RecipeAddPage.renderTextField} type="number"/>
                                 </div>
                             </div>
 
@@ -209,7 +210,7 @@ class RecipeAddPage extends Component {
                                         <div key={index} className="col-xs-4">
                                             <Field name={taste}
                                                    floatingLabelText={taste}
-                                                   component={this.renderTextField}/>
+                                                   component={RecipeAddPage.renderTextField}/>
                                         </div>
                                     );
                                 })}
@@ -230,8 +231,8 @@ class RecipeAddPage extends Component {
     }
 }
 
-function mapStateToProps({tags}) {
-    return {tags};
+function mapStateToProps({tags, ajaxCallsInProgress}) {
+    return {tags, loading: ajaxCallsInProgress > 0};
 }
 
 export default connect(mapStateToProps, {getTags, postRecipe})(form(RecipeAddPage));

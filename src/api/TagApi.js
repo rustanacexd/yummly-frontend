@@ -9,7 +9,7 @@ class TagApi {
     static getTags() {
         return TagApi.toRespJson(fetch(url));
     }
-    
+
     static toRespJson(promise) {
         return promise
             .then(delayPromise(delay))
