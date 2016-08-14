@@ -24,7 +24,7 @@ export default function configureStore(initialState) {
     });
   }
 
-  persistStore(store, {blacklist: ['ajaxCallsInProgress', 'isLoadMore', 'routing', 'user', 'form']} );
+  persistStore(store, {blacklist: ['ajaxCallsInProgress', 'isLoadMore', 'routing', 'user']} );
 
   return store;
 }

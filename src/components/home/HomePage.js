@@ -26,7 +26,7 @@ class HomePage extends Component {
 
 HomePage.propTypes = {};
 
-function mapStateToProps({recipes, ajaxCallsInProgress, isLoadMore}, ownProps) {
+function mapStateToProps({recipes, ajaxCallsInProgress, isLoadMore}) {
   return {recipes, loading: ajaxCallsInProgress > 0, isLoadMore}
 }
 

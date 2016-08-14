@@ -112,7 +112,6 @@ class RecipeAddPage extends Component {
     }
 
     renderIngredients({fields}) {
-
         return (
             <div>
                 {fields.map((member, index) =>
@@ -159,6 +158,8 @@ class RecipeAddPage extends Component {
             },
             {tags: [...new Set(formProps.tags.map(tag => tag.label))]},
             {ingredientCount: formProps.ingredients.length}));
+
+        browserHistory.push('/');
     }
 
     render() {
