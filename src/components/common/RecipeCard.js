@@ -10,12 +10,12 @@ const RecipeCard = ({recipe}) => {
             paddingBottom: 20
         }}>
             <Card >
-                <CardMedia 
+                <CardMedia
                 overlay={
-                    <CardTitle 
+                    <CardTitle
                     title={recipe.title} />
                 }>
-                    <img src="http://placehold.it/300x300/" />
+                    <img src="http://placehold.it/300x300/" style={{width: 400, height: 400}}/>
                 </CardMedia>
 
                 <CardText>

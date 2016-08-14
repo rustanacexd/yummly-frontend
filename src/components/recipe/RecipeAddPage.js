@@ -1,20 +1,15 @@
 import React, {Component, PropTypes} from 'react';
-import TextField from 'material-ui/TextField';
 import {Field, reduxForm, FieldArray} from 'redux-form';
 import {connect} from 'react-redux';
-import RaisedButton from 'material-ui/RaisedButton';
-import {getTags} from '../../actions/tagActions';
-import Chip from 'material-ui/Chip';
-import AutoComplete from 'material-ui/AutoComplete';
 
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import AutoComplete from 'material-ui/AutoComplete';
+import Chip from 'material-ui/Chip';
+
+import {getTags} from '../../actions/tagActions';
 
 const tastes = ['salty', 'savory', 'sour', 'bitter', 'spicy', 'sweet'];
-const fields = ['image', 'title', 'description', 'calories', 'totalTime', 'rating', 'servings', 'ingredients[]'];
-
-
-const form = reduxForm({
-    form: 'RecipeAddForm',
-});
 
 const styles = {
     chip: {
@@ -23,14 +18,42 @@ const styles = {
     wrapper: {
         display: 'flex',
         flexWrap: 'wrap',
+        marginBottom: 25
     },
 };
 
-class RecipeAddPage extends Component {
+const validate = values => {
+    const errors = {};
 
+    if (!values.title) {
+        errors.title = 'Required';
+    } else if (values.title.length > 50) {
+        errors.title = 'Must be 50 characters or less';
+    }
+
+    if (!values.description) {
+        errors.description = 'Required';
+    } else if (values.description.length > 500) {
+        errors.description = 'Must be 500 characters or less';
+    }
+
+    if (!values.ingredients) {
+        errors.ingredients = 'Required';
+    }
+
+    return errors;
+
+};
+
+const form = reduxForm({
+    form: 'RecipeAddForm',
+    validate
+});
+
+
+class RecipeAddPage extends Component {
     componentWillMount() {
         this.props.getTags();
-
     }
 
     constructor(props) {
@@ -43,10 +66,9 @@ class RecipeAddPage extends Component {
         };
     }
 
-
     renderTextField(field) {
         return (
-            <TextField fullWidth={true} {...field.input} />
+            <TextField fullWidth={true} {...field.input} errorText={field.touched && field.error && field.error}/>
         );
     }
 
@@ -57,7 +79,6 @@ class RecipeAddPage extends Component {
             </Chip>
         )
     }
-
 
     renderTags({fields}) {
         return (
@@ -85,10 +106,11 @@ class RecipeAddPage extends Component {
                     }}
                 />
 
+                <RaisedButton style={{marginLeft: 20}} label="Add Tag" primary={true}
+                              onTouchTap={() => fields.push({label: this.state.currentTag})}/>
             </div>
         );
     }
-
 
     renderIngredients({fields}) {
         return (
@@ -100,7 +122,7 @@ class RecipeAddPage extends Component {
                                 name={`${member}.ingredient`}
                                 type="text"
                                 component={this.renderTextField}
-                                placeholder={`Ingredient ${index + 1}`}/>
+                                placeholder={`Ingredient ${index + 1}`} multiLine={true}/>
                         </div>
 
                         <div className="col-xs-2">
@@ -112,7 +134,7 @@ class RecipeAddPage extends Component {
                         </div>
                     </div>
                 )}
-                <RaisedButton label="Add Ingredients" primary={true} onTouchTap={() => fields.push({})}/>
+                <RaisedButton label="Add Ingredient" primary={true} onTouchTap={() => fields.push({})}/>
             </div>
         );
     }
@@ -123,16 +145,14 @@ class RecipeAddPage extends Component {
 
     handleInitialize() {
         const initData = {
-            "title": 'test',
-            "description": 'testdec',
-            'image': 'http'
-
+            'image': 'http:lorempixel.com/300x300'
         };
 
         this.props.initialize(initData);
     }
 
     handleFormSubmit(formProps) {
+        formProps.ingredients = formProps.ingredients.filter(ingredient => ingredient.ingredient);
         console.log(formProps);
     }
 
@@ -148,8 +168,8 @@ class RecipeAddPage extends Component {
 
                             <Field name="title" floatingLabelText="Title" type="text" component={this.renderTextField}/>
 
-                            <Field name="description" type="text" floatingLabelText="Description"
-                                   component={this.renderTextField}/>
+                            <Field name="description" floatingLabelText="Description"
+                                   component={this.renderTextField} multiLine={true} rows={5}/>
 
                             <div className="row between-xs">
                                 <div className="col-sm-3 col-xs-12">
@@ -191,6 +211,10 @@ class RecipeAddPage extends Component {
 
                             <RaisedButton style={{marginTop: 25}} type="submit" label="Submit" primary={true}
                                           disabled={submitting || invalid}/>
+
+                            <RaisedButton style={{marginLeft: 25}} label="Clear Values"
+                                          disabled={pristine || submitting} onTouchTap={reset}/>
+
                         </form>
                     </div>
                 </div>

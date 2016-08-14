@@ -18,6 +18,10 @@ class RecipeApi {
         return RecipeApi.toRespJson(fetch(url + `?category=${category}`));
     }
 
+    static saveRecipe() {
+
+    }
+
     static toRespJson(promise) {
         return promise
             .then(delayPromise(delay))
