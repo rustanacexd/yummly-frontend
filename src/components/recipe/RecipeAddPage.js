@@ -41,6 +41,7 @@ const validate = values => {
         errors.description = 'Must be 500 characters or less';
     }
 
+
     return errors;
 
 };
@@ -52,10 +53,12 @@ const form = reduxForm({
 
 
 class RecipeAddPage extends Component {
+    componentWillMount() {
+        this.props.getTags();
+    }
 
     componentDidMount() {
         this.handleInitialize();
-        this.props.getTags();
     }
 
     constructor(props) {
@@ -142,22 +145,38 @@ class RecipeAddPage extends Component {
 
     handleInitialize() {
         const initData = {
-            'image': 'http://lorempixel.com/300x300'
+            image: 'http://lorempixel.com/300x300',
+            ingredients: [''],
+            tags: [],
+            taste: {
+                salty: 0,
+                savory: 0,
+                sour: 0,
+                spicy: 0,
+                sweet: 0,
+                bitter: 0,
+            },
+            calories: 0,
+            totalTime: 0,
+            rating: 0,
+            servings: 0,
         };
-
         this.props.initialize(initData);
     }
 
     handleFormSubmit(formProps) {
+        let ingredients = formProps.ingredients.filter(ingredient => ingredient.ingredient).map(
+            ingredient => ingredient.ingredient);
+
         this.props.postRecipe(Object.assign({}, formProps,
             {
-                ingredients: [...new Set(formProps.ingredients.filter(ingredient => ingredient.ingredient).map(
-                    ingredient => ingredient.ingredient))]
+                ingredients: [...new Set(ingredients)]
             },
             {tags: [...new Set(formProps.tags.map(tag => tag.label))]},
-            {ingredientCount: formProps.ingredients.length}));
+            {ingredientCount: ingredients.length}));
 
-        browserHistory.push('/');
+        console.log(formProps);
+        // browserHistory.push('/');
     }
 
     render() {
@@ -180,16 +199,18 @@ class RecipeAddPage extends Component {
 
                             <div className="row between-xs">
                                 <div className="col-sm-3 col-xs-12">
-                                    <Field name="calories" floatingLabelText="Title"
+                                    <Field name="calories" floatingLabelText="Calories (kcal)"
                                            component={RecipeAddPage.renderTextField} type="number"/>
                                 </div>
                                 <div className="col-sm-3 col-xs-12">
-                                    <Field name="totalTime" floatingLabelText="Total Time"
-                                           component={RecipeAddPage.renderTextField} type="number"/>
+                                    <Field name="totalTime" floatingLabelText="Total Time (mins)"
+                                           component={RecipeAddPage.renderTextField} type="number"
+                                           />
                                 </div>
                                 <div className="col-sm-3 col-xs-12">
-                                    <Field name="rating" floatingLabelText="Rating"
-                                           component={RecipeAddPage.renderTextField} type="number"/>
+                                    <Field name="rating" floatingLabelText="Rating (0-5)"
+                                           component={RecipeAddPage.renderTextField}
+                                           type="number" min="0" max="5"/>
                                 </div>
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="servings" floatingLabelText="Servings"
@@ -208,8 +229,11 @@ class RecipeAddPage extends Component {
                                 {tastes.map((taste, index) => {
                                     return (
                                         <div key={index} className="col-xs-4">
-                                            <Field name={taste}
-                                                   floatingLabelText={taste}
+                                            <Field name={`taste.${taste}`}
+                                                   type="number"
+                                                   min="0"
+                                                   max="10"
+                                                   floatingLabelText={`${taste} (0-10)`}
                                                    component={RecipeAddPage.renderTextField}/>
                                         </div>
                                     );

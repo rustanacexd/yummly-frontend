@@ -3,7 +3,6 @@
 // With Redux, the actual stores are in /reducers.
 
 import {createStore, applyMiddleware, compose} from 'redux';
-import { persistStore, autoRehydrate } from 'redux-persist'
 import rootReducer from '../reducers';
 import thunk from 'redux-thunk';
 
@@ -11,7 +10,6 @@ export default function configureStore(initialState) {
   const store = createStore(rootReducer, initialState, compose(
     // Add other middleware on this line...
     applyMiddleware(thunk),
-    autoRehydrate(),
     window.devToolsExtension ? window.devToolsExtension() : f => f // add support for Redux dev tools
   )
   );
@@ -24,7 +22,6 @@ export default function configureStore(initialState) {
     });
   }
 
-  persistStore(store, {blacklist: ['ajaxCallsInProgress', 'isLoadMore', 'routing', 'user']} );
 
   return store;
 }
