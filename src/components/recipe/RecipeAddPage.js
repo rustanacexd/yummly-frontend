@@ -52,7 +52,9 @@ const form = reduxForm({
 
 
 class RecipeAddPage extends Component {
-    componentWillMount() {
+
+    componentDidMount() {
+        this.handleInitialize();
         this.props.getTags();
     }
 
@@ -138,10 +140,6 @@ class RecipeAddPage extends Component {
         );
     }
 
-    componentDidMount() {
-        this.handleInitialize();
-    }
-
     handleInitialize() {
         const initData = {
             'image': 'http://lorempixel.com/300x300'
@@ -174,7 +172,8 @@ class RecipeAddPage extends Component {
                     <div>
                         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
-                            <Field name="title" floatingLabelText="Title" type="text" component={RecipeAddPage.renderTextField}/>
+                            <Field name="title" floatingLabelText="Title" type="text"
+                                   component={RecipeAddPage.renderTextField}/>
 
                             <Field name="description" floatingLabelText="Description"
                                    component={RecipeAddPage.renderTextField} multiLine={true} rows={5}/>

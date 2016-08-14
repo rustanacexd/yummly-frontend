@@ -6,28 +6,32 @@ import {loadRecipes} from '../../actions/recipeActions.js';
 import Loading from '../common/Loading';
 
 class HomePage extends Component {
-  render() {
-    if (this.props.recipes.length == 0) {
-      return <Loading />
+    componentWillMount() {
+        this.props.loadRecipes();
     }
 
-    return (
-      <div>
-        <Loading loading={this.props.isLoadMore && this.props.loading }/>
+    render() {
+        if (this.props.recipes.length == 0) {
+            return <Loading />
+        }
 
-        <NavFilter recipes={this.props.recipes}/>
-        <RaisedButton label="Load More" onTouchTap={() => {
-          this.props.loadRecipes(this.props.recipes.length + 5, true);
-        } }/>
-      </div>
-    );
-  }
+        return (
+            <div>
+                <Loading loading={this.props.isLoadMore && this.props.loading }/>
+
+                <NavFilter recipes={this.props.recipes}/>
+                <RaisedButton label="Load More" onTouchTap={() => {
+                    this.props.loadRecipes(this.props.recipes.length + 5, true);
+                } }/>
+            </div>
+        );
+    }
 }
 
 HomePage.propTypes = {};
 
 function mapStateToProps({recipes, ajaxCallsInProgress, isLoadMore}) {
-  return {recipes, loading: ajaxCallsInProgress > 0, isLoadMore}
+    return {recipes, loading: ajaxCallsInProgress > 0, isLoadMore}
 }
 
 export default connect(mapStateToProps, {loadRecipes})(HomePage);
