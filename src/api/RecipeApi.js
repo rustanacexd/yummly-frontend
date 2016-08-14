@@ -18,8 +18,15 @@ class RecipeApi {
         return RecipeApi.toRespJson(fetch(url + `?category=${category}`));
     }
 
-    static saveRecipe() {
-
+    static saveRecipe(values) {
+        return RecipeApi.toRespJson(fetch(url, {
+            method: 'post',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values)
+        }));
     }
 
     static toRespJson(promise) {

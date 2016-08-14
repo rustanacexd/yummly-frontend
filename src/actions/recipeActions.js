@@ -14,6 +14,24 @@ export function getRelatedRecipesSuccess(recipes) {
     return {type: types.GET_RELATED_RECIPE_SUCCESS, recipes};
 }
 
+export function postRecipeSuccess(response) {
+    return {type: types.POST_RECIPE_SUCCESS, response};
+}
+
+export function postRecipe(values) {
+    return dispatch => {
+        dispatch(beginAjaxCall());
+        return RecipeApi.saveRecipe(values)
+            .then(response => {
+                dispatch(postRecipeSuccess(response));
+            })
+            .catch(error => {
+                dispatch(ajaxCallError(error));
+                throw (error);
+            });
+    }
+}
+
 export function loadRecipes(limit = 20, isLoad = false) {
     return dispatch => {
         dispatch(beginAjaxCall());

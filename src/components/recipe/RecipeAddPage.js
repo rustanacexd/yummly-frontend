@@ -8,6 +8,7 @@ import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
 
 import {getTags} from '../../actions/tagActions';
+import {postRecipe} from '../../actions/recipeActions';
 
 const tastes = ['salty', 'savory', 'sour', 'bitter', 'spicy', 'sweet'];
 
@@ -35,10 +36,6 @@ const validate = values => {
         errors.description = 'Required';
     } else if (values.description.length > 500) {
         errors.description = 'Must be 500 characters or less';
-    }
-
-    if (!values.ingredients) {
-        errors.ingredients = 'Required';
     }
 
     return errors;
@@ -145,14 +142,23 @@ class RecipeAddPage extends Component {
 
     handleInitialize() {
         const initData = {
-            'image': 'http:lorempixel.com/300x300'
+            'image': 'http://lorempixel.com/300x300'
         };
 
         this.props.initialize(initData);
     }
 
     handleFormSubmit(formProps) {
-        formProps.ingredients = formProps.ingredients.filter(ingredient => ingredient.ingredient);
+
+        this.props.postRecipe(Object.assign({}, formProps,
+            {
+                ingredients: formProps.ingredients.filter(ingredient => ingredient.ingredient).map(
+                    ingredient => ingredient.ingredient
+                )
+            },
+            {tags: formProps.tags.map(tag => tag.label)},
+            {ingredientCount: formProps.ingredients.length}));
+
         console.log(formProps);
     }
 
@@ -228,5 +234,5 @@ function mapStateToProps({tags}) {
     return {tags};
 }
 
-export default connect(mapStateToProps, {getTags})(form(RecipeAddPage));
+export default connect(mapStateToProps, {getTags, postRecipe})(form(RecipeAddPage));
 
