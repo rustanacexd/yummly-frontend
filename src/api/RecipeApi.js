@@ -29,6 +29,10 @@ class RecipeApi {
         }));
     }
 
+    static getAllCategories() {
+        return RecipeApi.toRespJson(fetch('http://localhost:8080/categories'));
+    }
+
     static toRespJson(promise) {
         return promise
             .then(delayPromise(delay))

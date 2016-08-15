@@ -29,3 +29,11 @@ export function relatedRecipesReducer(state = relatedRecipes, action) {
             return state;
     }
 }
+
+export function categoriesReducer(state = [], action) {
+    if (action.type == types.GET_CATEGORIES_SUCCESS) {
+        return action.categories;
+    }
+
+    return state;
+}

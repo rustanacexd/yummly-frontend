@@ -7,11 +7,12 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
+import Checkbox from 'material-ui/Checkbox';
+
 
 import {getTags} from '../../actions/tagActions';
-import {postRecipe} from '../../actions/recipeActions';
+import {postRecipe, getAllCategories} from '../../actions/recipeActions';
 import Loading from '../common/Loading';
-
 
 const tastes = ['salty', 'savory', 'sour', 'bitter', 'spicy', 'sweet'];
 
@@ -41,9 +42,7 @@ const validate = values => {
         errors.description = 'Must be 500 characters or less';
     }
 
-
     return errors;
-
 };
 
 const form = reduxForm({
@@ -55,6 +54,8 @@ const form = reduxForm({
 class RecipeAddPage extends Component {
     componentWillMount() {
         this.props.getTags();
+        this.props.getAllCategories();
+
     }
 
     componentDidMount() {
@@ -65,15 +66,18 @@ class RecipeAddPage extends Component {
         super(props);
         this.renderIngredients = this.renderIngredients.bind(this);
         this.renderTags = this.renderTags.bind(this);
+        this.renderCategories = this.renderCategories.bind(this);
 
         this.state = {
-            currentTag: ''
+            currentTag: '',
+            categories: [],
         };
     }
 
     static renderTextField(field) {
         return (
-            <TextField fullWidth={true} {...field.input} errorText={field.touched && field.error && field.error}/>
+            <TextField fullWidth={true} {...field.input}
+                       errorText={field.touched && field.error && field.error}/>
         );
     }
 
@@ -82,10 +86,11 @@ class RecipeAddPage extends Component {
             <Chip {...field.input} style={styles.chip}>
                 {field.input.value}
             </Chip>
-        )
+        );
     }
 
-    renderTags({fields}) {
+
+    renderTags({fields, data}) {
         return (
             <div>
                 <div style={styles.wrapper}>
@@ -97,9 +102,8 @@ class RecipeAddPage extends Component {
 
                 <AutoComplete
                     name="currentTag"
-                    filter={AutoComplete.fuzzyFilter}
-                    dataSource={this.props.tags}
-                    maxSearchResults={5}
+                    filter={AutoComplete.caseInsensitiveFilter}
+                    dataSource={data}
                     onUpdateInput={(searchText) => {
                         this.setState({currentTag: searchText});
                     }}
@@ -143,10 +147,42 @@ class RecipeAddPage extends Component {
         );
     }
 
+    renderCategories(field) {
+        return (
+            <div>
+                { field.input.data.map((category, index) => {
+                    return (
+                        <Checkbox
+                            {...field.input}
+                            key={index}
+                            label={category}
+                            name={category}
+                            onCheck={(event, isInputChecked) => {
+                                if (isInputChecked) {
+                                    this.setState({categories: [...this.state.categories, event.target.name]})
+                                } else {
+                                    this.setState({
+                                        categories: this.state.categories.filter(value => {
+                                                return value === this.state.categories.find(category => {
+                                                        return category === event.target.name;
+                                                    })
+                                            }
+                                        )
+                                    });
+                                }
+                            }}
+                        />
+                    )
+                })}
+            </div>
+        )
+    }
+
     handleInitialize() {
         const initData = {
-            image: 'http://lorempixel.com/300x300',
+            image: 'http://lorempixel.com/640/480/food',
             ingredients: [''],
+            categories: [],
             tags: [],
             taste: {
                 salty: 0,
@@ -167,6 +203,9 @@ class RecipeAddPage extends Component {
     handleFormSubmit(formProps) {
         let ingredients = formProps.ingredients.filter(ingredient => ingredient.ingredient).map(
             ingredient => ingredient.ingredient);
+
+
+        formProps.categories = this.state.categories;
 
         this.props.postRecipe(Object.assign({}, formProps,
             {
@@ -205,7 +244,7 @@ class RecipeAddPage extends Component {
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="totalTime" floatingLabelText="Total Time (mins)"
                                            component={RecipeAddPage.renderTextField} type="number"
-                                           />
+                                    />
                                 </div>
                                 <div className="col-sm-3 col-xs-12">
                                     <Field name="rating" floatingLabelText="Rating (0-5)"
@@ -218,11 +257,15 @@ class RecipeAddPage extends Component {
                                 </div>
                             </div>
 
+                            <h2>Category</h2>
+                            <Field name="categories" component={this.renderCategories} data={this.props.categories}/>
+
+
                             <h2>Ingredients</h2>
                             <FieldArray name="ingredients" component={this.renderIngredients}/>
 
                             <h2>Tags</h2>
-                            <FieldArray name="tags" component={this.renderTags}/>
+                            <FieldArray name="tags" data={this.props.tags} component={this.renderTags}/>
 
                             <h2>Tastes</h2>
                             <div className="row between-xs">
@@ -255,9 +298,9 @@ class RecipeAddPage extends Component {
     }
 }
 
-function mapStateToProps({tags, ajaxCallsInProgress}) {
-    return {tags, loading: ajaxCallsInProgress > 0};
+function mapStateToProps({tags, categories, ajaxCallsInProgress}) {
+    return {tags, loading: ajaxCallsInProgress > 0, categories};
 }
 
-export default connect(mapStateToProps, {getTags, postRecipe})(form(RecipeAddPage));
+export default connect(mapStateToProps, {getTags, postRecipe, getAllCategories})(form(RecipeAddPage));
 

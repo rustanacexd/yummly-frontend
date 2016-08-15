@@ -15,7 +15,7 @@ const RecipeCard = ({recipe}) => {
                     <CardTitle
                     title={recipe.title} />
                 }>
-                    <img src="http://placehold.it/300x300/" style={{width: 400, height: 400}}/>
+                    <img src={recipe.image} style={{width: 400, height: 400}}/>
                 </CardMedia>
 
                 <CardText>

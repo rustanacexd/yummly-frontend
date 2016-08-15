@@ -18,6 +18,11 @@ export function postRecipeSuccess(response) {
     return {type: types.POST_RECIPE_SUCCESS, response};
 }
 
+export function getCategoriesSuccess(categories) {
+    return {type: types.GET_CATEGORIES_SUCCESS, categories};
+}
+
+
 export function postRecipe(values) {
     return dispatch => {
         dispatch(beginAjaxCall());
@@ -70,6 +75,15 @@ export function getRelatedRecipes(category) {
     }
 }
 
+export function getAllCategories() {
+    return dispatch => {
+        return RecipeApi.getAllCategories().then(categories => {
+            dispatch(getCategoriesSuccess(categories));
+        }).catch(error => {
+            throw error(error)
+        });
+    }
+}
 
 
 

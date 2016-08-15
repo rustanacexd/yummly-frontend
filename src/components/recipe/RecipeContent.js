@@ -40,7 +40,7 @@ const RecipeContent = ({recipe, user}) => {
                     style={{ display: 'flex', justifyContent: 'center' }}
                     overlay={<CardTitle title={recipe.title} subtitle={recipe.description}/>}
                     >
-                    <img src="http://placehold.it/500x500/" style={{ maxWidth: 500 }}/>
+                    <img src={recipe.image || 'http://placehod.it/500x500 '} style={{ maxWidth: 500 }}/>
                 </CardMedia>
                 <CardText>
                     <List>
@@ -55,7 +55,7 @@ const RecipeContent = ({recipe, user}) => {
                     </div>
 
                     <div className="info-label">Rating:
-                        <span> {recipe.rating} / 5 ({recipe.numberOfReviews})</span>
+                        <span> {recipe.rating} / 5 ({recipe.numberOfReviews || 0})</span>
                     </div>
 
                     <div className="info-label">Calories:
