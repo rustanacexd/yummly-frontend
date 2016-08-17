@@ -15,7 +15,7 @@ export function getRelatedRecipesSuccess(recipes) {
 }
 
 export function postRecipeSuccess(response) {
-    return {type: types.POST_RECIPE_SUCCESS, response};
+    return {type: types.POST_RECIPE_SUCCESS, message: response.statusText, open: true};
 }
 
 export function getCategoriesSuccess(categories) {
@@ -28,13 +28,14 @@ export function postRecipe(values) {
         dispatch(beginAjaxCall());
         return RecipeApi.saveRecipe(values)
             .then(response => {
+                console.log(response);
                 dispatch(postRecipeSuccess(response));
             })
             .catch(error => {
                 dispatch(ajaxCallError(error));
                 throw (error);
             });
-    }
+    };
 }
 
 export function loadRecipes(limit = 20, isLoad = false) {
@@ -59,7 +60,7 @@ export function getRecipe(id) {
         }).catch(error => {
             dispatch(ajaxCallError(error));
             throw (error);
-        })
+        });
     };
 }
 
@@ -72,18 +73,21 @@ export function getRelatedRecipes(category) {
             dispatch(ajaxCallError(error));
             throw (error);
         });
-    }
+    };
 }
 
 export function getAllCategories() {
     return dispatch => {
+        dispatch(beginAjaxCall());
         return RecipeApi.getAllCategories().then(categories => {
             dispatch(getCategoriesSuccess(categories));
         }).catch(error => {
-            throw error(error)
+            dispatch(ajaxCallError(error));
+            throw error(error);
         });
-    }
+    };
 }
+
 
 
 

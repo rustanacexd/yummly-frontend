@@ -1,17 +1,20 @@
-import React, { Component, PropTypes } from 'react';
-import { Link, IndexLink } from 'react-router';
+import React, {Component, PropTypes} from 'react';
 import Header from './common/Header';
-import Footer from './common/Footer';
+import Notification from '../components/common/Notification';
+import {connect} from 'react-redux';
+
 
 
 class App extends Component {
     render() {
-            return (
-                <div>
-                    <Header />
-                    {this.props.children}
-                </div>
-            );
+        return (
+            <div>
+                <Header />
+                {this.props.children}
+                <Notification message={this.props.notificationMessage.message}
+                              open={this.props.notificationMessage.open}/>
+            </div>
+        );
     }
 }
 
@@ -20,5 +23,8 @@ App.propTypes = {
     children: PropTypes.object.isRequired
 };
 
+function mapStateToProps({notificationMessage}) {
+    return { notificationMessage }
+}
 
-export default App;
+export default connect(mapStateToProps)(App);

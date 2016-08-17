@@ -4,7 +4,8 @@ import {recipesReducer, recipeReducer, relatedRecipesReducer, categoriesReducer}
 import {userReducer} from './userReducer';
 import {tagsReducer} from './tagReducer';
 import {ajaxStatusReducer, loadMoreReducer} from './ajaxStatusReducer';
-import {reducer as formReducer} from 'redux-form'
+import notificationReducer from './notificationReducer';
+import {reducer as formReducer} from 'redux-form';
 
 
 const rootReducer = combineReducers({
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     isLoadMore: loadMoreReducer,
     tags: tagsReducer,
     form: formReducer,
-    categories: categoriesReducer
+    categories: categoriesReducer,
+    notificationMessage: notificationReducer
 
 });
 

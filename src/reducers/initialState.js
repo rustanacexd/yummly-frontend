@@ -59,6 +59,7 @@ export const user = {
 export const users = [], tags = [], recipes = [], relatedRecipes =[];
 export const ajaxCallsInProgress = 0;
 export const isLoadMore = false;
+export const notification = { message: '', open: false};
 
 
 

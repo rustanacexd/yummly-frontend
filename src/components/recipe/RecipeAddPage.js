@@ -14,6 +14,7 @@ import {getTags} from '../../actions/tagActions';
 import {postRecipe, getAllCategories} from '../../actions/recipeActions';
 import Loading from '../common/Loading';
 
+
 const tastes = ['salty', 'savory', 'sour', 'bitter', 'spicy', 'sweet'];
 
 const styles = {
@@ -204,18 +205,12 @@ class RecipeAddPage extends Component {
         let ingredients = formProps.ingredients.filter(ingredient => ingredient.ingredient).map(
             ingredient => ingredient.ingredient);
 
-
         formProps.categories = this.state.categories;
 
-        this.props.postRecipe(Object.assign({}, formProps,
-            {
-                ingredients: [...new Set(ingredients)]
-            },
+        this.props.postRecipe(Object.assign({}, formProps, {ingredients: [...new Set(ingredients)]},
             {tags: [...new Set(formProps.tags.map(tag => tag.label))]},
-            {ingredientCount: ingredients.length}));
+            {ingredientCount: ingredients.length})).then(browserHistory.push('/'));
 
-        console.log(formProps);
-        // browserHistory.push('/');
     }
 
     render() {
@@ -225,6 +220,7 @@ class RecipeAddPage extends Component {
         return (
             <div className="container">
                 <Loading loading={this.props.loading}/>
+
 
                 <div className="col-sm-6 col-sm-offset-3">
                     <div>

@@ -2,41 +2,51 @@ import 'whatwg-fetch';
 import delayPromise from '../utils/delayPromise';
 
 const url = 'http://localhost:8080/recipes/';
-const delay = 1000;
-
+const delay = 2000;
+const categoriesURL = 'http://localhost:8080/categories';
 
 class RecipeApi {
     static getAllRecipes(limit) {
-        return RecipeApi.toRespJson(fetch(url + `?_limit=${limit}`));
+        return fetch(url + `?_limit=${limit}`).then(RecipeApi.parseJSON);
     }
 
     static getRecipe(id = 1) {
-        return RecipeApi.toRespJson(fetch(url + id));
+        return fetch(url + id).then(RecipeApi.parseJSON);
     }
 
     static getRelatedRecipes(category) {
-        return RecipeApi.toRespJson(fetch(url + `?category=${category}`));
+        return fetch(url + `?category=${category}`).then(RecipeApi.parseJSON);
+
     }
 
     static saveRecipe(values) {
-        return RecipeApi.toRespJson(fetch(url, {
+        return fetch(url, {
             method: 'post',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(values)
-        }));
+        }).then(delayPromise(delay)).then(RecipeApi.checkStatus);
     }
+
 
     static getAllCategories() {
-        return RecipeApi.toRespJson(fetch('http://localhost:8080/categories'));
+        return fetch(categoriesURL).then(RecipeApi.parseJSON);
     }
 
-    static toRespJson(promise) {
-        return promise
-            .then(delayPromise(delay))
-            .then(response => response.json());
+    static parseJSON(response) {
+        return response.json();
+    }
+
+    static checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response
+        } else {
+            var error = new Error(response.statusText);
+            error.response = response;
+            throw error
+        }
     }
 }
 
