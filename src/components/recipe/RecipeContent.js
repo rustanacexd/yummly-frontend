@@ -40,7 +40,7 @@ const RecipeContent = ({recipe, user}) => {
                     style={{ display: 'flex', justifyContent: 'center' }}
                     overlay={<CardTitle title={recipe.title} subtitle={recipe.description}/>}
                     >
-                    <img src={recipe.image || 'http://placehod.it/500x500 '} style={{ maxWidth: 500 }}/>
+                    <img src={recipe.image || 'http://placehold.it/500x500 '} style={{ maxWidth: 500 }}/>
                 </CardMedia>
                 <CardText>
                     <List>
