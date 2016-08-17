@@ -7,13 +7,11 @@ const delay = 1000;
 
 class TagApi {
     static getTags() {
-        return TagApi.toRespJson(fetch(url));
+        return fetch(url).then(TagApi.parseJSON);
     }
 
-    static toRespJson(promise) {
-        return promise
-            .then(delayPromise(delay))
-            .then(response => response.json());
+    static parseJSON(response) {
+        return response.json();
     }
 }
 

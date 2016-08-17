@@ -4,8 +4,8 @@ export function beginAjaxCall() {
   return {type: types.BEGIN_AJAX_CALL};
 }
 
-export function ajaxCallError() {
-  return {type: types.AJAX_CALL_ERROR};
+export function ajaxCallError(error) {
+  return {type: types.AJAX_CALL_ERROR, message: error.message, open: true};
 }
 
 export function isLoadMore(isLoadMore) {

@@ -9,7 +9,6 @@ import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
 import Checkbox from 'material-ui/Checkbox';
 
-
 import {getTags} from '../../actions/tagActions';
 import {postRecipe, getAllCategories} from '../../actions/recipeActions';
 import Loading from '../common/Loading';
@@ -53,27 +52,6 @@ const form = reduxForm({
 
 
 class RecipeAddPage extends Component {
-    componentWillMount() {
-        this.props.getTags();
-        this.props.getAllCategories();
-
-    }
-
-    componentDidMount() {
-        this.handleInitialize();
-    }
-
-    constructor(props) {
-        super(props);
-        this.renderIngredients = this.renderIngredients.bind(this);
-        this.renderTags = this.renderTags.bind(this);
-        this.renderCategories = this.renderCategories.bind(this);
-
-        this.state = {
-            currentTag: '',
-            categories: [],
-        };
-    }
 
     static renderTextField(field) {
         return (
@@ -88,6 +66,28 @@ class RecipeAddPage extends Component {
                 {field.input.value}
             </Chip>
         );
+    }
+
+    constructor(props) {
+        super(props);
+        this.renderIngredients = this.renderIngredients.bind(this);
+        this.renderTags = this.renderTags.bind(this);
+        this.renderCategories = this.renderCategories.bind(this);
+
+        this.state = {
+            currentTag: '',
+            categories: [],
+        };
+    }
+
+    componentWillMount() {
+        this.props.getTags();
+        this.props.getAllCategories();
+
+    }
+
+    componentDidMount() {
+        this.handleInitialize();
     }
 
 
@@ -160,23 +160,23 @@ class RecipeAddPage extends Component {
                             name={category}
                             onCheck={(event, isInputChecked) => {
                                 if (isInputChecked) {
-                                    this.setState({categories: [...this.state.categories, event.target.name]})
+                                    this.setState({categories: [...this.state.categories, event.target.name]});
                                 } else {
                                     this.setState({
                                         categories: this.state.categories.filter(value => {
                                                 return value === this.state.categories.find(category => {
                                                         return category === event.target.name;
-                                                    })
+                                                    });
                                             }
                                         )
                                     });
                                 }
                             }}
                         />
-                    )
+                    );
                 })}
             </div>
-        )
+        );
     }
 
     handleInitialize() {
@@ -290,9 +290,24 @@ class RecipeAddPage extends Component {
                 </div>
 
             </div>
-        )
+        );
     }
 }
+
+RecipeAddPage.propTypes = {
+    getTags: PropTypes.func.isRequired,
+    getAllCategories: PropTypes.func.isRequired,
+    initialize: PropTypes.func.isRequired,
+    postRecipe: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    pristine: PropTypes.bool,
+    reset: PropTypes.func,
+    submitting: PropTypes.bool,
+    invalid: PropTypes.bool,
+    loading: PropTypes.bool,
+    categories: PropTypes.array.isRequired,
+    tags: PropTypes.array.isRequired
+};
 
 function mapStateToProps({tags, categories, ajaxCallsInProgress}) {
     return {tags, loading: ajaxCallsInProgress > 0, categories};

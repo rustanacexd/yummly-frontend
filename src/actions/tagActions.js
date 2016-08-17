@@ -13,7 +13,6 @@ export function getTags() {
         return TagApi.getTags().then(tags => dispatch(getTagsSuccess(tags)))
             .catch(error => {
                 dispatch(ajaxCallError(error));
-                throw (error);
             });
     };
 }

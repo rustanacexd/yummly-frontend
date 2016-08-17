@@ -28,7 +28,6 @@ export function postRecipe(values) {
         dispatch(beginAjaxCall());
         return RecipeApi.saveRecipe(values)
             .then(response => {
-                console.log(response);
                 dispatch(postRecipeSuccess(response));
             })
             .catch(error => {
@@ -71,7 +70,6 @@ export function getRelatedRecipes(category) {
             dispatch(getRelatedRecipesSuccess(recipes));
         }).catch(error => {
             dispatch(ajaxCallError(error));
-            throw (error);
         });
     };
 }
@@ -83,7 +81,6 @@ export function getAllCategories() {
             dispatch(getCategoriesSuccess(categories));
         }).catch(error => {
             dispatch(ajaxCallError(error));
-            throw error(error);
         });
     };
 }
