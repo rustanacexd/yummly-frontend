@@ -32,7 +32,6 @@ export function postRecipe(values) {
             })
             .catch(error => {
                 dispatch(ajaxCallError(error));
-                throw (error);
             });
     };
 }
@@ -46,7 +45,6 @@ export function loadRecipes(limit = 20, isLoad = false) {
             .then(recipes => dispatch(loadRecipesSuccess(recipes)))
             .catch(error => {
                 dispatch(ajaxCallError(error));
-                throw (error);
             });
     };
 }
@@ -58,7 +56,6 @@ export function getRecipe(id) {
             dispatch(getRecipeSuccess(recipe));
         }).catch(error => {
             dispatch(ajaxCallError(error));
-            throw (error);
         });
     };
 }

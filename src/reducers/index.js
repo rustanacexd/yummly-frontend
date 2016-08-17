@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import {routerReducer} from 'react-router-redux';
-import {recipesReducer, recipeReducer, relatedRecipesReducer, categoriesReducer} from './recipeReducer';
+import {recipesReducer, recipeReducer, categoriesReducer} from './recipeReducer';
 import {userReducer} from './userReducer';
 import {tagsReducer} from './tagReducer';
 import {ajaxStatusReducer, loadMoreReducer} from './ajaxStatusReducer';
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
     routing: routerReducer,
     recipes: recipesReducer,
     recipe: recipeReducer,
-    relatedRecipes: relatedRecipesReducer,
+    relatedRecipes: recipesReducer,
     user: userReducer,
     ajaxCallsInProgress: ajaxStatusReducer,
     isLoadMore: loadMoreReducer,
