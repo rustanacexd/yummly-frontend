@@ -163,17 +163,13 @@ class RecipeAddPage extends Component {
                                     this.setState({categories: [...this.state.categories, event.target.name]});
                                 } else {
                                     this.setState({
-                                        categories: this.state.categories.filter(value => {
-                                                return value === this.state.categories.find(category => {
-                                                        return category === event.target.name;
-                                                    });
-                                            }
-                                        )
+                                        categories: this.state.categories.filter(value => value !== event.target.name)
                                     });
                                 }
                             }}
                         />
-                    );
+                    )
+                        ;
                 })}
             </div>
         );
@@ -202,14 +198,17 @@ class RecipeAddPage extends Component {
     }
 
     handleFormSubmit(formProps) {
-        let ingredients = formProps.ingredients.filter(ingredient => ingredient.ingredient).map(
-            ingredient => ingredient.ingredient);
+        let ingredients = formProps.ingredients.map(ingredient => ingredient.ingredient);
 
         formProps.categories = this.state.categories;
 
-        this.props.postRecipe(Object.assign({}, formProps, {ingredients: [...new Set(ingredients)]},
-            {tags: [...new Set(formProps.tags.map(tag => tag.label))]},
-            {ingredientCount: ingredients.length})).then(browserHistory.push('/'));
+        this.props.postRecipe(
+            Object.assign({},
+                formProps,
+                {ingredients: [...new Set(ingredients)]},
+                {tags: [...new Set(formProps.tags.map(tag => tag.label))]},
+                {ingredientCount: ingredients.length})).then(browserHistory.push('/')
+        );
 
     }
 

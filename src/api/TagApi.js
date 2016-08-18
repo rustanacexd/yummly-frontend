@@ -14,6 +14,16 @@ class TagApi {
             .then(parseJSON);
     }
 
+    static postTags(tags) {
+        return fetch(url, {
+            method: 'post',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tags)
+        }).then(delayPromise(delay)).then(checkStatus);
+    }
 
 }
 
