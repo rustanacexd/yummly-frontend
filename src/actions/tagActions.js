@@ -1,5 +1,5 @@
 import {GET_TAGS_SUCCESS} from './actionTypes';
-import TagApi from '../api/TagApi';
+import {getAllTags} from '../api/TagApi';
 import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
 
 
@@ -10,7 +10,7 @@ export function getTagsSuccess(tags) {
 export function getTags() {
     return dispatch => {
         dispatch(beginAjaxCall());
-        return TagApi.getTags().then(tags => dispatch(getTagsSuccess(tags)))
+        return getAllTags().then(tags => dispatch(getTagsSuccess(tags)))
             .catch(error => {
                 dispatch(ajaxCallError(error));
             });

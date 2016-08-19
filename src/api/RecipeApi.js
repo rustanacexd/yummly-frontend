@@ -3,7 +3,7 @@ import delayPromise from '../utils/delayPromise';
 import {parseJSON, checkStatus} from '../utils/helpers';
 
 const url = 'http://localhost:8080/recipes/';
-const delay = 2000;
+const delay = 5000;
 const categoriesURL = 'http://localhost:8080/categories';
 
 class RecipeApi {

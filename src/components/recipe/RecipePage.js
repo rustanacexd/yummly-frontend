@@ -19,11 +19,17 @@ class RecipePage extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this.ignoreLastFetch = true;
+    }
+
     fetchData() {
-        this.props.getRecipe(this.props.params.id).then(() => {
-            this.props.loadUser(this.props.recipe.userId);
-            this.props.getRelatedRecipes(this.props.recipe.category);
-        });
+        if (!this.ignoreLastFetch) {
+            this.props.getRecipe(this.props.params.id).then(() => {
+                this.props.loadUser(this.props.recipe.userId);
+                this.props.getRelatedRecipes(this.props.recipe.category);
+            });
+        }
     }
 
     render() {
