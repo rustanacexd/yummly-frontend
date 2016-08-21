@@ -123,7 +123,6 @@ class RecipeAddPage extends Component {
                     filter={AutoComplete.caseInsensitiveFilter}
                     dataSource={data}
                     onUpdateInput={debounce(300, (searchText) => {
-                        console.log('test');
                         this.setState({currentTag: searchText});
                     })}
                     searchText={this.state.currentTag}
