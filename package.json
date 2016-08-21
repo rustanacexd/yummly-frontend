@@ -42,6 +42,7 @@
     "redux-form": "6.0.0-rc.3",
     "redux-persist": "3.2.2",
     "redux-thunk": "2.1.0",
+    "throttle-debounce": "1.0.1",
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm, Field} from 'redux-form';
 import {connect} from 'react-redux';
+import debounce from 'throttle-debounce/debounce';
 
 import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
@@ -121,16 +122,18 @@ class RecipeAddPage extends Component {
                     name="currentTag"
                     filter={AutoComplete.caseInsensitiveFilter}
                     dataSource={data}
-                    onUpdateInput={(searchText) => {
+                    onUpdateInput={debounce(300, (searchText) => {
+                        console.log('test');
                         this.setState({currentTag: searchText});
-                    }}
+                    })}
                     searchText={this.state.currentTag}
                     onNewRequest={chosenRequest => {
-                        this.setState({currentTag: chosenRequest});
+                        const request = chosenRequest.trim();
+                        this.setState({currentTag: request});
 
-                        if (!this.state.tags.includes(chosenRequest)) {
-                            fields.push({name: chosenRequest});
-                            this.setState({tags: [...new Set([...this.state.tags, chosenRequest])]});
+                        if (!this.state.tags.includes(request)) {
+                            fields.push({name: request});
+                            this.setState({tags: [...new Set([...this.state.tags, request])]});
                         }
                     }}
                 />
