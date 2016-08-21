@@ -48,7 +48,16 @@ class RecipePage extends Component {
     }
 }
 
-RecipePage.PropTypes = {};
+RecipePage.propTypes = {
+    params: PropTypes.object.isRequired,
+    getRecipe: PropTypes.func.isRequired,
+    recipe: PropTypes.object.isRequired,
+    loadUser: PropTypes.func.isRequired,
+    getRelatedRecipes: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired,
+    relatedRecipes: PropTypes.array.isRequired,
+};
 
 function mapStateToProps({recipe, relatedRecipes, user, ajaxCallsInProgress}) {
     return {recipe, relatedRecipes, user, loading: ajaxCallsInProgress > 0};

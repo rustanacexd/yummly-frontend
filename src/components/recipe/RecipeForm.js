@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -108,5 +108,18 @@ const RecipeForm = ({
 
     </form>
 );
+
+RecipeForm.propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    submitting:PropTypes.bool.isRequired,
+    pristine:  PropTypes.bool.isRequired,
+    categories: PropTypes.array.isRequired,
+    renderCategories: PropTypes.func.isRequired,
+    renderTags: PropTypes.func.isRequired,
+    invalid: PropTypes.bool.isRequired,
+    reset: PropTypes.func.isRequired,
+    tags: PropTypes.array.isRequired,
+    fields: PropTypes.array,
+};
 
 export default RecipeForm;

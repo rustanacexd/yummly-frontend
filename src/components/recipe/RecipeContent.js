@@ -10,7 +10,7 @@ const renderIngredients = (ingredients) => {
     return ingredients.map((ingredient, index) => {
         return (
             <div key={index}>
-                <ListItem primaryText={ingredient} disabled={true} />
+                <ListItem primaryText={ingredient} disabled={true}/>
                 <Divider />
             </div>
         );
@@ -35,12 +35,12 @@ const RecipeContent = ({recipe, user}) => {
                     title={user.username}
                     subtitle={user.website}
                     avatar={user.avatar}
-                    />
+                />
                 <CardMedia
-                    style={{ display: 'flex', justifyContent: 'center' }}
+                    style={{display: 'flex', justifyContent: 'center'}}
                     overlay={<CardTitle title={recipe.title} subtitle={recipe.description}/>}
-                    >
-                    <img src={recipe.image || 'http://placehold.it/500x500 '} style={{ maxWidth: 500 }}/>
+                >
+                    <img src={recipe.image || 'http://placehold.it/500x500 '} style={{maxWidth: 500}}/>
                 </CardMedia>
                 <CardText>
                     <List>
@@ -50,7 +50,7 @@ const RecipeContent = ({recipe, user}) => {
                     </List>
                 </CardText>
                 <CardActions className="info-wrapper">
-                  <div className="info-label">Category:
+                    <div className="info-label">Category:
                         <span> {recipe.category}</span>
                     </div>
 
@@ -71,7 +71,7 @@ const RecipeContent = ({recipe, user}) => {
                 </CardActions>
 
                 <CardActions className="tags-wrapper">
-                    <div className="info-label">Tags: </div>
+                    <div className="info-label">Tags:</div>
                     {renderTags(recipe.tags) }
                 </CardActions>
             </Card>

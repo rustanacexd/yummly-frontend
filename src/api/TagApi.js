@@ -13,7 +13,7 @@ export const getAllTags = () => {
         .then(parseJSON);
 };
 
-export const postTags = (tags) => {
+export const postAllTags = (tags) => {
     return fetch(url, {
         method: 'post',
         mode: 'cors',
@@ -21,6 +21,6 @@ export const postTags = (tags) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(tags)
-    }).then(delayPromise(delay)).then(checkStatus);
+    });
 };
 

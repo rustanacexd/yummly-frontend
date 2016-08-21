@@ -1,5 +1,5 @@
 import {GET_TAGS_SUCCESS} from './actionTypes';
-import {getAllTags} from '../api/TagApi';
+import {getAllTags, postAllTags} from '../api/TagApi';
 import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
 
 
@@ -15,5 +15,12 @@ export function getTags() {
                 dispatch(ajaxCallError(error));
             });
     };
+}
+
+export function postTags(tags) {
+    return dispatch => {
+        dispatch(beginAjaxCall());
+        return postAllTags(tags);
+    }
 }
 

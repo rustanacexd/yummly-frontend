@@ -7,7 +7,7 @@ import Chip from 'material-ui/Chip';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import {getTags} from '../../actions/tagActions';
+import {getTags, postTags} from '../../actions/tagActions';
 import {postRecipe, getAllCategories} from '../../actions/recipeActions';
 import Loading from '../common/Loading';
 
@@ -57,6 +57,7 @@ class RecipeAddPage extends Component {
         this.state = {
             currentTag: '',
             categories: [],
+            tags: []
         };
     }
 
@@ -96,21 +97,22 @@ class RecipeAddPage extends Component {
         );
     }
 
-    renderChip(field) {
-        return (
-            <Chip {...field.input} style={styles.chip}>
-                {field.input.value}
-            </Chip>
-        );
-    }
 
     renderTags({fields, data}) {
         return (
             <div>
                 <div style={styles.wrapper}>
                     {fields.map((member, index) =>
-                        <Field component={this.renderChip} name={`${member}.label`} key={index}
-                               onRequestDelete={() => fields.remove(index)}/>
+                        <Field component={(field) => (
+                            <Chip {...field.input} style={styles.chip}>
+                                {field.input.value}
+                            </Chip>
+                        )} name={`${member}.label`} key={index}
+                               onRequestDelete={() => {
+                                   fields.remove(index);
+                                   this.setState({tags: this.state.tags.filter((_, i) => i !== index)})
+                               }}
+                        />
                     )}
                 </div>
 
@@ -124,16 +126,24 @@ class RecipeAddPage extends Component {
                     searchText={this.state.currentTag}
                     onNewRequest={chosenRequest => {
                         this.setState({currentTag: chosenRequest});
-                        fields.push({label: chosenRequest});
+
+                        if (!this.state.tags.includes(chosenRequest)) {
+                            fields.push({label: chosenRequest});
+                            this.setState({tags: [...new Set([...this.state.tags, chosenRequest])]});
+                        }
                     }}
                 />
 
                 <RaisedButton style={{marginLeft: 20}} label="Add Tag" primary={true}
-                              onTouchTap={() => fields.push({label: this.state.currentTag})}/>
+                              onTouchTap={() => {
+                                  if (!this.state.tags.includes(this.state.currentTag)) {
+                                      fields.push({label: this.state.currentTag});
+                                      this.setState({tags: [...new Set([...this.state.tags, this.state.currentTag])]})
+                                  }
+                              }}/>
             </div>
         );
     }
-
 
     handleInitialize() {
         const initData = {
@@ -160,13 +170,19 @@ class RecipeAddPage extends Component {
     handleFormSubmit(formProps) {
 
         let ingredients = formProps.ingredients.map(ingredient => ingredient.ingredient);
+        let tags = [...new Set(formProps.tags.map(tag => tag.label))];
+        let allTags = [...new Set([...formProps.tags.map(tag => tag.label), ...this.props.tags])];
+
+        this.props.postTags(allTags);
+        console.log(allTags);
+        console.log(tags);
+
 
         formProps.categories = this.state.categories;
-
-        this.props.postRecipe(
+        this.props.this.props.postRecipe(
             Object.assign({}, formProps,
                 {ingredients: [...new Set(ingredients)]},
-                {tags: [...new Set(formProps.tags.map(tag => tag.label))]},
+                {tags: tags},
                 {ingredientCount: ingredients.length}));
 
     }
@@ -220,5 +236,5 @@ function mapStateToProps({tags, categories, ajaxCallsInProgress}) {
     return {tags, loading: ajaxCallsInProgress > 0, categories};
 }
 
-export default connect(mapStateToProps, {getTags, postRecipe, getAllCategories})(form(RecipeAddPage));
+export default connect(mapStateToProps, {postTags, getTags, postRecipe, getAllCategories})(form(RecipeAddPage));
 
