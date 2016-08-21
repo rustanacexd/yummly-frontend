@@ -103,14 +103,15 @@ class RecipeAddPage extends Component {
             <div>
                 <div style={styles.wrapper}>
                     {fields.map((member, index) =>
+
                         <Field component={(field) => (
                             <Chip {...field.input} style={styles.chip}>
                                 {field.input.value}
                             </Chip>
-                        )} name={`${member}.label`} key={index}
+                        )} name={`${member}.name`} key={index}
                                onRequestDelete={() => {
                                    fields.remove(index);
-                                   this.setState({tags: this.state.tags.filter((_, i) => i !== index)})
+                                   this.setState({tags: this.state.tags.filter((tag, i) => i !== index)});
                                }}
                         />
                     )}
@@ -128,7 +129,7 @@ class RecipeAddPage extends Component {
                         this.setState({currentTag: chosenRequest});
 
                         if (!this.state.tags.includes(chosenRequest)) {
-                            fields.push({label: chosenRequest});
+                            fields.push({name: chosenRequest});
                             this.setState({tags: [...new Set([...this.state.tags, chosenRequest])]});
                         }
                     }}
@@ -136,8 +137,8 @@ class RecipeAddPage extends Component {
 
                 <RaisedButton style={{marginLeft: 20}} label="Add Tag" primary={true}
                               onTouchTap={() => {
-                                  if (!this.state.tags.includes(this.state.currentTag)) {
-                                      fields.push({label: this.state.currentTag});
+                                  if (!this.state.tags.includes(this.state.currentTag) && this.state.currentTag) {
+                                      fields.push({name: this.state.currentTag});
                                       this.setState({tags: [...new Set([...this.state.tags, this.state.currentTag])]})
                                   }
                               }}/>
@@ -168,23 +169,20 @@ class RecipeAddPage extends Component {
     }
 
     handleFormSubmit(formProps) {
+        let ingredients = formProps.ingredients
+            .filter(Boolean)
+            .map(ingredient => ingredient.ingredient);
 
-        let ingredients = formProps.ingredients.map(ingredient => ingredient.ingredient);
-        let tags = [...new Set(formProps.tags.map(tag => tag.label))];
-        let allTags = [...new Set([...formProps.tags.map(tag => tag.label), ...this.props.tags])];
-
-        this.props.postTags(allTags);
-        console.log(allTags);
-        console.log(tags);
-
+        let tags = [...new Set(formProps.tags)];
 
         formProps.categories = this.state.categories;
-        this.props.this.props.postRecipe(
+
+        this.props.postTags([...new Set([...tags, ...this.props.tags])]);
+        this.props.postRecipe(
             Object.assign({}, formProps,
                 {ingredients: [...new Set(ingredients)]},
                 {tags: tags},
                 {ingredientCount: ingredients.length}));
-
     }
 
     render() {
@@ -207,7 +205,7 @@ class RecipeAddPage extends Component {
                             renderCategories={this.renderCategories}
                             categories={this.props.categories}
                             renderTags={this.renderTags}
-                            tags={this.props.tags}
+                            tags={this.props.tags.map(tag => tag.name)}
                         />
                     </div>
                 </div>

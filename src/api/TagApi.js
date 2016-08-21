@@ -14,13 +14,17 @@ export const getAllTags = () => {
 };
 
 export const postAllTags = (tags) => {
-    return fetch(url, {
-        method: 'post',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(tags)
-    });
+
+    for (let tag of tags) {
+        fetch(url, {
+            method: 'post',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tag)
+        });
+    }
+
 };
 

@@ -19,7 +19,6 @@ export function getTags() {
 
 export function postTags(tags) {
     return dispatch => {
-        dispatch(beginAjaxCall());
         return postAllTags(tags);
     }
 }
