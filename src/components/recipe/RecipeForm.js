@@ -45,7 +45,7 @@ const RecipeForm = ({
     handleSubmit, pristine, reset, submitting,
     invalid, renderCategories, categories, renderTags, tags
 }) => (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={event => event.preventDefault()}>
 
         <Field name="title" floatingLabelText="Title" type="text"
                component={renderTextField}/>
@@ -101,7 +101,7 @@ const RecipeForm = ({
         </div>
 
         <RaisedButton style={{marginTop: 25}} type="submit" label="Submit" primary={true}
-                      disabled={submitting || invalid}/>
+                      disabled={submitting || invalid} onTouchTap={handleSubmit}/>
 
         <RaisedButton style={{marginLeft: 25}} label="Clear Values"
                       disabled={pristine || submitting} onTouchTap={reset}/>
@@ -119,7 +119,6 @@ RecipeForm.propTypes = {
     invalid: PropTypes.bool.isRequired,
     reset: PropTypes.func.isRequired,
     tags: PropTypes.array.isRequired,
-    fields: PropTypes.array,
 };
 
 export default RecipeForm;

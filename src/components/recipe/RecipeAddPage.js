@@ -141,7 +141,7 @@ class RecipeAddPage extends Component {
                               onTouchTap={() => {
                                   if (!this.state.tags.includes(this.state.currentTag) && this.state.currentTag) {
                                       fields.push({name: this.state.currentTag});
-                                      this.setState({tags: [...new Set([...this.state.tags, this.state.currentTag])]})
+                                      this.setState({tags: [...new Set([...this.state.tags, this.state.currentTag])]});
                                   }
                               }}/>
             </div>
@@ -222,6 +222,7 @@ RecipeAddPage.propTypes = {
     getAllCategories: PropTypes.func.isRequired,
     initialize: PropTypes.func.isRequired,
     postRecipe: PropTypes.func.isRequired,
+    postTags: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     reset: PropTypes.func,

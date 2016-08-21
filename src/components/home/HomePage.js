@@ -12,7 +12,7 @@ class HomePage extends Component {
 
     render() {
         if (this.props.recipes.length == 0) {
-            return <Loading />
+            return <Loading />;
         }
 
         return (
@@ -28,10 +28,16 @@ class HomePage extends Component {
     }
 }
 
-HomePage.propTypes = {};
+HomePage.propTypes = {
+    loadRecipes: PropTypes.func.isRequired,
+    recipes: PropTypes.array.isRequired,
+    isLoadMore: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired
+
+};
 
 function mapStateToProps({recipes, ajaxCallsInProgress, isLoadMore}) {
-    return {recipes, loading: ajaxCallsInProgress > 0, isLoadMore}
+    return {recipes, loading: ajaxCallsInProgress > 0, isLoadMore};
 }
 
 export default connect(mapStateToProps, {loadRecipes})(HomePage);

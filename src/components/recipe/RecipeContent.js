@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -77,6 +77,11 @@ const RecipeContent = ({recipe, user}) => {
             </Card>
         </div>
     );
+};
+
+RecipeContent.propTypes = {
+    recipe: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequire
 };
 
 export default RecipeContent;

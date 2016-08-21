@@ -1,7 +1,8 @@
-import React from 'react';
-import {Link, browserHistory} from 'react-router';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import React, {PropTypes} from 'react';
+import {browserHistory} from 'react-router';
+import {Card, CardActions, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import LazyLoad from 'react-lazy-load';
 
 
 const RecipeCard = ({recipe}) => {
@@ -15,7 +16,9 @@ const RecipeCard = ({recipe}) => {
                     <CardTitle
                     title={recipe.title} />
                 }>
-                    <img src={recipe.image} style={{width: 400, height: 400}}/>
+                    <LazyLoad height={300} offsetVertical={300}>
+                        <img src={recipe.image} style={{maxWidth: "100%", height: 'auto'}}/>
+                    </LazyLoad>
                 </CardMedia>
 
                 <CardText>
@@ -32,6 +35,10 @@ const RecipeCard = ({recipe}) => {
         </div>
 
     );
+};
+
+RecipeCard.propTypes = {
+  recipe: PropTypes.object.isRequired
 };
 
 export default RecipeCard;
