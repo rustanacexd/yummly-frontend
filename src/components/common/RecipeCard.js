@@ -12,13 +12,16 @@ const RecipeCard = ({recipe}) => {
         }}>
             <Card >
                 <CardMedia
-                overlay={
-                    <CardTitle
-                    title={recipe.title} />
-                }>
-                    <LazyLoad height={300} offsetVertical={300}>
-                        <img src={recipe.image} style={{maxWidth: "100%", height: 'auto'}}/>
+                    overlay={
+                        <CardTitle
+                            titleStyle={{fontSize: 16, textTransform: 'uppercase', lineHeight: '24px'}}
+                            title={recipe.title}/>
+                    }
+                >
+                    <LazyLoad height={300} offsetVertical={200}>
+                        <img src={recipe.image} style={{height: 300, maxWidth: '100%'}}/>
                     </LazyLoad>
+
                 </CardMedia>
 
                 <CardText>
@@ -28,7 +31,7 @@ const RecipeCard = ({recipe}) => {
                     <FlatButton label="See More" onTouchTap={() => {
                         browserHistory.push(`/recipe/${recipe.id}`);
                     } }/>
-                    <FlatButton label={`Rating: ${recipe.rating} / 5`} style={{ float: "right" }}/>
+                    <FlatButton label={`Rating: ${recipe.rating} / 5`} style={{float: "right"}}/>
                 </CardActions>
 
             </Card>
@@ -38,7 +41,7 @@ const RecipeCard = ({recipe}) => {
 };
 
 RecipeCard.propTypes = {
-  recipe: PropTypes.object.isRequired
+    recipe: PropTypes.object.isRequired
 };
 
 export default RecipeCard;

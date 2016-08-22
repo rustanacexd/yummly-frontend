@@ -6,6 +6,9 @@ import Subheader from 'material-ui/Subheader';
 import Chip from 'material-ui/Chip';
 import '../../styles/recipe.scss';
 
+import LazyLoad from 'react-lazy-load';
+
+
 const renderIngredients = (ingredients) => {
     return ingredients.map((ingredient, index) => {
         return (
@@ -21,7 +24,7 @@ const renderTags = (tags) => {
     return tags.map((tag, index) => {
         return (
             <Chip className="tag" key={index}>
-                {tag}
+                {tag.name}
             </Chip>
         );
     });
@@ -36,11 +39,16 @@ const RecipeContent = ({recipe, user}) => {
                     subtitle={user.website}
                     avatar={user.avatar}
                 />
+
                 <CardMedia
                     style={{display: 'flex', justifyContent: 'center'}}
                     overlay={<CardTitle title={recipe.title} subtitle={recipe.description}/>}
                 >
-                    <img src={recipe.image || 'http://placehold.it/500x500 '} style={{maxWidth: 500}}/>
+
+                    <LazyLoad height={500}>
+                        <img src={recipe.image} style={{maxHeight: 500, maxWidth: '100%'}}/>
+                    </LazyLoad>
+
                 </CardMedia>
                 <CardText>
                     <List>
@@ -81,7 +89,7 @@ const RecipeContent = ({recipe, user}) => {
 
 RecipeContent.propTypes = {
     recipe: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequire
+    user: PropTypes.object.isRequired
 };
 
 export default RecipeContent;

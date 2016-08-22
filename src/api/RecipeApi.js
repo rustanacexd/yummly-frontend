@@ -21,7 +21,7 @@ class RecipeApi {
     }
 
     static getRelatedRecipes(category) {
-        return fetch(url + `?category=${category}`)
+        return fetch(url + `?categories?q=${category}&_limit=5`)
             .then(parseJSON);
 
     }

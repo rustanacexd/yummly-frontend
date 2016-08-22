@@ -27,7 +27,7 @@ class RecipePage extends Component {
         if (!this.ignoreLastFetch) {
             this.props.getRecipe(this.props.params.id).then(() => {
                 this.props.loadUser(this.props.recipe.userId);
-                this.props.getRelatedRecipes(this.props.recipe.category);
+                this.props.getRelatedRecipes(this.props.recipe.category[0]);
             });
         }
     }
