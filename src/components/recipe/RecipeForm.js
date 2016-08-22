@@ -100,6 +100,7 @@ const RecipeForm = ({
             })}
         </div>
 
+
         <RaisedButton style={{marginTop: 25}} type="submit" label="Submit" primary={true}
                       disabled={submitting || invalid} onTouchTap={handleSubmit}/>
 
