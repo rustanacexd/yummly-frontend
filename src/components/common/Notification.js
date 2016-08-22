@@ -7,8 +7,9 @@ const Notification = ({message, open, onRequestClose}) => {
         <Snackbar
             open={open}
             message={message}
-            autoHideDuration={2000}
+            autoHideDuration={100000}
             onRequestClose={onRequestClose}
+            style={{left: 'auto'}}
         />
     );
 };
