@@ -40,7 +40,7 @@ class RecipePage extends Component {
         return (
             <div className="row">
                 <RecipeContent recipe={this.props.recipe} user={this.props.user}/>
-                <RecipeRelatedList recipes={this.props.relatedRecipes.filter(recipe => {
+                <RecipeRelatedList recipes={this.props.recipes.filter(recipe => {
                     return recipe.id !== this.props.recipe.id;
                 })}/>
             </div>
@@ -59,8 +59,8 @@ RecipePage.propTypes = {
     relatedRecipes: PropTypes.array.isRequired,
 };
 
-function mapStateToProps({recipe, relatedRecipes, user, ajaxCallsInProgress}) {
-    return {recipe, relatedRecipes, user, loading: ajaxCallsInProgress > 0};
+function mapStateToProps({recipe, recipes, user, ajaxCallsInProgress}) {
+    return {recipe, recipes, user, loading: ajaxCallsInProgress > 0};
 }
 
 export default connect(mapStateToProps, {getRecipe, loadUser, getRelatedRecipes})(RecipePage);

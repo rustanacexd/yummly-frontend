@@ -18,10 +18,10 @@ function handleActive(tab) {
 const NavFilter = ({recipes}) => {
     return (
         <Tabs>
-            <Tab label="Item One">
+            <Tab label="Seasonal">
                 <RecipeList recipes={recipes}/>
             </Tab>
-            <Tab label="Item Two">
+            <Tab label="Popular">
                 <div>
                     <h2 style={styles.headline}>Tab Two</h2>
                     <p>
@@ -30,7 +30,7 @@ const NavFilter = ({recipes}) => {
                 </div>
             </Tab>
             <Tab
-                label="onActive"
+                label="Quick and Easy"
                 data-route="/home">
                 <div>
                     <h2 style={styles.headline}>Tab Three</h2>

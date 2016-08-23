@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory, applyRouterMiddleware } from 'react-router';
 import routes from './routes';
 import configureStore from './store/configureStore';
-import { syncHistoryWithStore } from 'react-router-redux';
 import useScroll from 'react-router-scroll';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -16,14 +15,13 @@ import '../node_modules/flexboxgrid/dist/flexboxgrid.min.css';
 const store = configureStore();
 
 // Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store);
 
 injectTapEventPlugin();
 
 render(
   <MuiThemeProvider>
     <Provider store={store}>
-      <Router history={history}
+      <Router history={browserHistory}
         routes={routes}
         render={applyRouterMiddleware(useScroll()) }/>
     </Provider>

@@ -18,7 +18,7 @@ const RecipeCard = ({recipe}) => {
                             title={recipe.title}/>
                     }
                 >
-                    <LazyLoad height={300} offsetVertical={200}>
+                    <LazyLoad height={300} offsetVertical={300}>
                         <img src={recipe.image} style={{height: 300, maxWidth: '100%'}}/>
                     </LazyLoad>
 
