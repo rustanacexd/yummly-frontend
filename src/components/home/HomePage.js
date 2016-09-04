@@ -11,17 +11,20 @@ class HomePage extends Component {
     }
 
     render() {
+
+        const {recipes, isLoadMore, loading, loadRecipes } = this.props;
+
         if (this.props.recipes.length == 0) {
             return <Loading />;
         }
 
         return (
             <div>
-                <Loading loading={this.props.isLoadMore && this.props.loading }/>
+                <Loading loading={isLoadMore && loading }/>
 
-                <NavFilter recipes={this.props.recipes}/>
+                <NavFilter recipes={recipes}/>
                 <RaisedButton label="Load More" onTouchTap={() => {
-                    this.props.loadRecipes(this.props.recipes.length + 5, true);
+                    loadRecipes(recipes.length + 5, true);
                 } }/>
             </div>
         );

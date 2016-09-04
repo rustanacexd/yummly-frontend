@@ -24,24 +24,28 @@ class RecipePage extends Component {
     }
 
     fetchData() {
+        const {params, getRecipe, recipe, loadUser, getRelatedRecipes} = this.props;
+
         if (!this.ignoreLastFetch) {
-            this.props.getRecipe(this.props.params.id).then(() => {
-                this.props.loadUser(this.props.recipe.userId);
-                this.props.getRelatedRecipes(this.props.recipe.category[0]);
+            getRecipe(params.id).then(() => {
+                loadUser(recipe.userId);
+                getRelatedRecipes(recipe.category[0]);
             });
         }
     }
 
     render() {
-        if (this.props.loading) {
+        const {loading, recipe, user, recipes,} = this.props;
+
+        if (loading) {
             return <Loading />;
         }
 
         return (
             <div className="row">
-                <RecipeContent recipe={this.props.recipe} user={this.props.user}/>
-                <RecipeRelatedList recipes={this.props.recipes.filter(recipe => {
-                    return recipe.id !== this.props.recipe.id;
+                <RecipeContent recipe={recipe} user={user}/>
+                <RecipeRelatedList recipes={recipes.filter(recipe_ => {
+                    return recipe_.id !== recipe.id;
                 })}/>
             </div>
         );

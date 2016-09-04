@@ -11,14 +11,17 @@ class App extends Component {
     }
 
     render() {
+
+        const {notificationUpdate, notificationMessage} = this.props;
+
         return (
             <div>
                 <Header />
                 {this.props.children}
                 <Notification
-                    onRequestClose={this.props.notificationUpdate}
-                    message={this.props.notificationMessage.message}
-                    open={this.props.notificationMessage.open}/>
+                    onRequestClose={notificationUpdate}
+                    message={notificationMessage.message}
+                    open={notificationMessage.open}/>
             </div>
         );
     }
