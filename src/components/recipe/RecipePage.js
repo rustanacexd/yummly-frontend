@@ -35,7 +35,7 @@ class RecipePage extends Component {
     }
 
     render() {
-        const {loading, recipe, user, recipes,} = this.props;
+        const {loading, recipe, user, relatedRecipes} = this.props;
 
         if (loading) {
             return <Loading />;
@@ -44,7 +44,7 @@ class RecipePage extends Component {
         return (
             <div className="row">
                 <RecipeContent recipe={recipe} user={user}/>
-                <RecipeRelatedList recipes={recipes.filter(recipe_ => {
+                <RecipeRelatedList recipes={relatedRecipes.filter(recipe_ => {
                     return recipe_.id !== recipe.id;
                 })}/>
             </div>
@@ -63,8 +63,8 @@ RecipePage.propTypes = {
     relatedRecipes: PropTypes.array.isRequired,
 };
 
-function mapStateToProps({recipe, recipes, user, ajaxCallsInProgress}) {
-    return {recipe, recipes, user, loading: ajaxCallsInProgress > 0};
+function mapStateToProps({relatedRecipes, recipe, recipes, user, ajaxCallsInProgress}) {
+    return {relatedRecipes, recipe, recipes, user, loading: ajaxCallsInProgress > 0};
 }
 
 export default connect(mapStateToProps, {getRecipe, loadUser, getRelatedRecipes})(RecipePage);

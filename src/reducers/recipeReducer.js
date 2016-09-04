@@ -4,12 +4,19 @@ import {recipes, recipe } from './initialState';
 export function recipesReducer(state = recipes, action) {
     switch (action.type) {
         case types.LOAD_RECIPES_SUCCESS:
-        case types.GET_RELATED_RECIPE_SUCCESS:
             return action.recipes;
 
         default:
             return state;
     }
+}
+
+export function relatedRecipesReducer(state = recipes, action) {
+    if(action.type == types.GET_RELATED_RECIPE_SUCCESS) {
+        return action.recipes
+    }
+
+    return state;
 }
 
 export function recipeReducer(state = recipe, action) {
