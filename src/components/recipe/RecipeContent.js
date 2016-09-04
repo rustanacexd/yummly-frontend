@@ -4,6 +4,7 @@ import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import Chip from 'material-ui/Chip';
+
 import '../../styles/recipe.scss';
 
 import LazyLoad from 'react-lazy-load';
@@ -29,6 +30,7 @@ const renderTags = (tags) => {
         );
     });
 };
+
 
 const RecipeContent = ({recipe, user}) => {
     return (
@@ -59,7 +61,7 @@ const RecipeContent = ({recipe, user}) => {
                 </CardText>
                 <CardActions className="info-wrapper">
                     <div className="info-label">Category:
-                        <span> {recipe.category}</span>
+                        <span> {recipe.category.join(', ')}</span>
                     </div>
 
                     <div className="info-label">Rating:

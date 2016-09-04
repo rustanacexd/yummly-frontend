@@ -36,12 +36,12 @@ export function postRecipe(values) {
     };
 }
 
-export function loadRecipes(limit = 20, isLoad = false) {
+export function loadRecipes(limit, isLoad = false) {
     return dispatch => {
         dispatch(beginAjaxCall());
         if (isLoadMore) dispatch(isLoadMore(isLoad));
 
-        return RecipeApi.getAllRecipes(limit)
+        return RecipeApi.getAllRecipes(limit = 40)
             .then(recipes => dispatch(loadRecipesSuccess(recipes)))
             .catch(error => {
                 dispatch(ajaxCallError(error));

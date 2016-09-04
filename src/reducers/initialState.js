@@ -10,7 +10,7 @@ export const recipe = {
     totalTime: 0,
     rating: 0,
     servings: 0,
-    category: "",
+    category: [],
     taste: {
         salty: 0,
         savory: 0,
@@ -19,11 +19,7 @@ export const recipe = {
         sweet: 0,
         spicy: 0
     },
-    tags: [
-        "hot",
-        "seasonal",
-        "cheap"
-    ],
+    tags: [],
     averageRating: 0,
     numberOfReviews: 0
 };
