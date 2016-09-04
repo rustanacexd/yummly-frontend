@@ -15,29 +15,29 @@ function handleActive(tab) {
     alert(`A tab with this route property ${tab.props['data-route']} was activated.`);
 }
 
+
 const NavFilter = ({recipes}) => {
+
+    function filterCategories(filter) {
+        return recipes.filter(recipes => recipes.category.some(category => category === filter))
+    }
+
+    const seasonalRecipes = filterCategories('seasonal');
+    const popularRecipes = filterCategories('popular');
+    const quickRecipes = filterCategories('quick and easy');
+
     return (
         <Tabs>
             <Tab label="Seasonal">
-                <RecipeList recipes={recipes}/>
+                <RecipeList recipes={seasonalRecipes}/>
             </Tab>
             <Tab label="Popular">
-                <div>
-                    <h2 style={styles.headline}>Tab Two</h2>
-                    <p>
-                        This is another example tab.
-                    </p>
-                </div>
+                <RecipeList recipes={popularRecipes}/>
             </Tab>
             <Tab
                 label="Quick and Easy"
                 data-route="/home">
-                <div>
-                    <h2 style={styles.headline}>Tab Three</h2>
-                    <p>
-                        This is a third example tab.
-                    </p>
-                </div>
+                <RecipeList recipes={quickRecipes}/>
             </Tab>
         </Tabs>
     );
