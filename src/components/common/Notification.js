@@ -10,7 +10,7 @@ class Notification extends React.Component {
             <Snackbar
                 open={notification.open}
                 message={notification.message}
-                autoHideDuration={1000}
+                autoHideDuration={3000}
                 onRequestClose={()=> {
                     notificationUpdate('', false);
                 }}

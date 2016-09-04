@@ -9,7 +9,7 @@ export const getAllUsers = (limit = 20) => {
         .then(parseJSON);
 };
 
-export const getUser = (id = 1) => {
+export const getUser = (id) => {
     return fetch(url + id)
         .then(checkStatus)
         .then(parseJSON);

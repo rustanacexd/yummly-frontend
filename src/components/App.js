@@ -1,8 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import Header from './common/Header';
 import Notification from '../components/common/Notification';
-import {connect} from 'react-redux';
-
 
 class App extends Component {
     constructor(props) {
