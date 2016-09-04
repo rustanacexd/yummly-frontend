@@ -100,7 +100,7 @@ class RecipeAddPage extends Component {
 
 
     renderTags({fields, data}) {
-        const {tags, currentTag } = this.state;
+        const {tags, currentTag} = this.state;
         return (
             <div>
                 <div style={styles.wrapper}>
@@ -172,22 +172,21 @@ class RecipeAddPage extends Component {
     }
 
     handleFormSubmit(formProps) {
-        const {postTags, postRecipe, tags, categories} = this.props;
+        const {postTags, postRecipe, tags} = this.props;
 
-        let newIngredients = formProps.ingredients
-            .filter(Boolean)
-            .map(ingredient => ingredient.ingredient);
+        const newIngredients = [...new Set(formProps.ingredients
+            .filter(Boolean).map(ingredient => ingredient.ingredient))];
 
-        let newTags = [...new Set(formProps.tags)];
+        const newTags = [...new Set(formProps.tags)];
 
-        formProps.categories = categories;
+        formProps.categories = this.state.categories;
 
         postTags([...new Set([...newTags, ...tags])]);
-        postRecipe(
-            Object.assign({}, formProps,
-                {ingredients: [...new Set(newIngredients)]},
-                {tags: newTags},
-                {ingredientCount: newIngredients.length}));
+
+        postRecipe(Object.assign({}, formProps,
+            {ingredients: newIngredients},
+            {tags: newTags},
+            {ingredientCount: newIngredients.length}));
     }
 
     render() {
