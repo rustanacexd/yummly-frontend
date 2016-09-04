@@ -7,7 +7,7 @@ import Loading from '../common/Loading';
 
 class HomePage extends Component {
     componentWillMount() {
-        this.props.loadRecipes();
+        this.props.loadRecipes(40);
     }
 
     render() {
@@ -24,7 +24,7 @@ class HomePage extends Component {
 
                 <NavFilter recipes={recipes}/>
                 <RaisedButton label="Load More" onTouchTap={() => {
-                    loadRecipes(recipes.length + 5, true);
+                    loadRecipes(recipes.length + 10, true);
                 } }/>
             </div>
         );

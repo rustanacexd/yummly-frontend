@@ -39,9 +39,10 @@ export function postRecipe(values) {
 export function loadRecipes(limit, isLoad = false) {
     return dispatch => {
         dispatch(beginAjaxCall());
+
         if (isLoadMore) dispatch(isLoadMore(isLoad));
 
-        return RecipeApi.getAllRecipes(limit = 40)
+        return RecipeApi.getAllRecipes(limit)
             .then(recipes => dispatch(loadRecipesSuccess(recipes)))
             .catch(error => {
                 dispatch(ajaxCallError(error));
@@ -56,6 +57,7 @@ export function getRecipe(id) {
             dispatch(getRecipeSuccess(recipe));
         }).catch(error => {
             dispatch(ajaxCallError(error));
+            browserHistory.replace('/404')
         });
     };
 }

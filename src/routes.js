@@ -14,7 +14,7 @@ export default (
         <Route path="recipe/add" component={RecipeAddPage}/>
         <Route path="recipe/:id" component={RecipePage}/>
         <Route path="profile/(:id)" component={ProfilePage}/>
-        <Route path="*" component={NotFoundPage}/>
+        <Route path="404" component={NotFoundPage}/>
     </Route>
 );
 
