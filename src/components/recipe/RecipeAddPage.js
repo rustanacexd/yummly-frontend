@@ -100,6 +100,7 @@ class RecipeAddPage extends Component {
 
 
     renderTags({fields, data}) {
+        const {tags, currentTag } = this.state;
         return (
             <div>
                 <div style={styles.wrapper}>
@@ -112,7 +113,7 @@ class RecipeAddPage extends Component {
                         )} name={`${member}.name`} key={index}
                                onRequestDelete={() => {
                                    fields.remove(index);
-                                   this.setState({tags: this.state.tags.filter((tag, i) => i !== index)});
+                                   this.setState({tags: tags.filter((tag, i) => i !== index)});
                                }}
                         />
                     )}
@@ -125,23 +126,23 @@ class RecipeAddPage extends Component {
                     onUpdateInput={debounce(300, (searchText) => {
                         this.setState({currentTag: searchText});
                     })}
-                    searchText={this.state.currentTag}
+                    searchText={currentTag}
                     onNewRequest={chosenRequest => {
                         const request = chosenRequest.trim();
                         this.setState({currentTag: request});
 
-                        if (!this.state.tags.includes(request)) {
+                        if (!tags.includes(request)) {
                             fields.push({name: request});
-                            this.setState({tags: [...new Set([...this.state.tags, request])]});
+                            this.setState({tags: [...new Set([...tags, request])]});
                         }
                     }}
                 />
 
                 <RaisedButton style={{marginLeft: 20}} label="Add Tag" primary={true}
                               onTouchTap={() => {
-                                  if (!this.state.tags.includes(this.state.currentTag) && this.state.currentTag) {
-                                      fields.push({name: this.state.currentTag});
-                                      this.setState({tags: [...new Set([...this.state.tags, this.state.currentTag])]});
+                                  if (!tags.includes(currentTag) && currentTag) {
+                                      fields.push({name: currentTag});
+                                      this.setState({tags: [...new Set([...tags, currentTag])]});
                                   }
                               }}/>
             </div>
@@ -171,29 +172,34 @@ class RecipeAddPage extends Component {
     }
 
     handleFormSubmit(formProps) {
-        let ingredients = formProps.ingredients
+        const {postTags, postRecipe, tags, categories} = this.props;
+
+        let newIngredients = formProps.ingredients
             .filter(Boolean)
             .map(ingredient => ingredient.ingredient);
 
-        let tags = [...new Set(formProps.tags)];
+        let newTags = [...new Set(formProps.tags)];
 
-        formProps.categories = this.state.categories;
+        formProps.categories = categories;
 
-        this.props.postTags([...new Set([...tags, ...this.props.tags])]);
-        this.props.postRecipe(
+        postTags([...new Set([...newTags, ...tags])]);
+        postRecipe(
             Object.assign({}, formProps,
-                {ingredients: [...new Set(ingredients)]},
-                {tags: tags},
-                {ingredientCount: ingredients.length}));
+                {ingredients: [...new Set(newIngredients)]},
+                {tags: newTags},
+                {ingredientCount: newIngredients.length}));
     }
 
     render() {
 
-        const {handleSubmit, pristine, reset, submitting, invalid} = this.props;
+        const {
+            handleSubmit, pristine, reset, submitting, invalid,
+            categories, tags, loading
+        } = this.props;
 
         return (
             <div className="container">
-                <Loading loading={this.props.loading}/>
+                <Loading loading={loading}/>
 
 
                 <div className="col-sm-6 col-sm-offset-3">
@@ -205,9 +211,9 @@ class RecipeAddPage extends Component {
                             submitting={submitting}
                             invalid={invalid}
                             renderCategories={this.renderCategories}
-                            categories={this.props.categories}
+                            categories={categories}
                             renderTags={this.renderTags}
-                            tags={this.props.tags.map(tag => tag.name)}
+                            tags={tags.map(tag => tag.name)}
                         />
                     </div>
                 </div>
