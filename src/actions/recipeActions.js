@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import {beginAjaxCall, ajaxCallError, isLoadMore} from './ajaxStatusActions';
+import {beginAjaxCall, ajaxCallError, isLoadMore, notificationUpdate} from './ajaxStatusActions';
 import RecipeApi from '../api/RecipeApi';
 import {browserHistory} from 'react-router';
 
@@ -16,25 +16,16 @@ export function getRelatedRecipesSuccess(recipes) {
     return {type: types.GET_RELATED_RECIPE_SUCCESS, recipes};
 }
 
-export function postRecipeSuccess(response) {
-    return {
-        type: types.POST_RECIPE_SUCCESS,
-        message: response.statusText,
-        open: true
-    };
-}
-
 export function getCategoriesSuccess(categories) {
     return {type: types.GET_CATEGORIES_SUCCESS, categories};
 }
-
 
 export function postRecipe(values) {
     return dispatch => {
         dispatch(beginAjaxCall());
         return RecipeApi.saveRecipe(values)
             .then(response => {
-                dispatch(postRecipeSuccess(response));
+                dispatch(notificationUpdate(response.statusText, true));
             })
             .then(() => {
                 browserHistory.replace('/')

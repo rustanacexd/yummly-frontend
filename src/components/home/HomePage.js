@@ -14,7 +14,7 @@ class HomePage extends Component {
 
         const {recipes, isLoadMore, loading, loadRecipes } = this.props;
 
-        if (this.props.recipes.length == 0) {
+        if (recipes.length == 0) {
             return <Loading />;
         }
 

@@ -12,7 +12,9 @@ export function isLoadMore(isLoadMore) {
     return {type: types.IS_LOAD_MORE, isLoadMore};
 }
 
-export function notificationUpdate() {
-    return {type: types.NOTIFICATION_UPDATE, message: '', open: false};
+export function notificationUpdate(message, open) {
+    return {
+        type: types.NOTIFICATION_UPDATE, message , open
+    };
 }
 

@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
     tags: tagsReducer,
     form: formReducer,
     categories: categoriesReducer,
-    notificationMessage: notificationReducer
+    notification: notificationReducer
 
 });
 
